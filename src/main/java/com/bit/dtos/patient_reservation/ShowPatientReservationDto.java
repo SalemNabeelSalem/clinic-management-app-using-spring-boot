@@ -1,4 +1,4 @@
-package com.bit.dtos;
+package com.bit.dtos.patient_reservation;
 
 import com.bit.enums.Gender;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ShowEmployeeDto {
+public class ShowPatientReservationDto {
 
     private Long id;
 
@@ -18,7 +18,7 @@ public class ShowEmployeeDto {
 
     private String phone;
 
-    private String image;
+    private String feeling;
 
     private Date createdAt;
 

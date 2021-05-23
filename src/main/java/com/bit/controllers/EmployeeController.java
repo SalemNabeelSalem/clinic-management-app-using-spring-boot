@@ -1,10 +1,11 @@
 package com.bit.controllers;
 
-import com.bit.dtos.CreateEmployeeDto;
-import com.bit.dtos.ShowEmployeeDto;
-import com.bit.dtos.UpdateEmployeeDto;
+import com.bit.dtos.employee.CreateEmployeeDto;
+import com.bit.dtos.employee.ShowEmployeeDto;
+import com.bit.dtos.employee.UpdateEmployeeDto;
 import com.bit.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,5 +34,11 @@ public class EmployeeController {
                                           @RequestBody UpdateEmployeeDto employeeRequest) {
 
         return employeeService.updateEmployee(employeeId, employeeRequest);
+    }
+
+    @DeleteMapping("/employee/{id}")
+    public ResponseEntity deleteEmployee(@PathVariable("id") Long employeeId) {
+
+        return employeeService.deleteEmployee(employeeId);
     }
 }

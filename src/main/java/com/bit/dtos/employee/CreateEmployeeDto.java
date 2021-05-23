@@ -1,10 +1,11 @@
-package com.bit.dtos;
+package com.bit.dtos.employee;
 
 import com.bit.enums.Gender;
+import com.bit.enums.Role;
 import lombok.Data;
 
 @Data
-public class UpdateEmployeeDto {
+public class CreateEmployeeDto {
 
     private String fullName;
 
@@ -12,7 +13,11 @@ public class UpdateEmployeeDto {
 
     private String email;
 
+    private String password;
+
     private String phone;
 
     private String image;
+
+    private Role role;
 }

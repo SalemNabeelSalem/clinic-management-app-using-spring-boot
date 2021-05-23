@@ -1,13 +1,14 @@
 package com.bit.services;
 
-import com.bit.dtos.CreateEmployeeDto;
-import com.bit.dtos.ShowEmployeeDto;
-import com.bit.dtos.UpdateEmployeeDto;
+import com.bit.dtos.employee.CreateEmployeeDto;
+import com.bit.dtos.employee.ShowEmployeeDto;
+import com.bit.dtos.employee.UpdateEmployeeDto;
 import com.bit.entities.Employee;
 import com.bit.exceptions.ResourceNotFoundException;
 import com.bit.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,11 +29,9 @@ public class EmployeeService {
             (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
         ).collect(Collectors.toList());
 
-        List<ShowEmployeeDto> showEmployeesDtoList = sortedEmployeesList.stream().map(
+        return sortedEmployeesList.stream().map(
             obj -> modelMapper.map(obj, ShowEmployeeDto.class)
         ).collect(Collectors.toList());
-
-        return showEmployeesDtoList;
     }
 
     public ShowEmployeeDto createNewEmployee(CreateEmployeeDto employeeRequest) {
@@ -71,5 +70,21 @@ public class EmployeeService {
         return modelMapper.map(
             employeeRepository.save(employeeData), ShowEmployeeDto.class
         );
+    }
+
+    public ResponseEntity deleteEmployee(Long employeeId) {
+
+        if (employeeRepository.findById(employeeId).isEmpty()) {
+
+            throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
+        }
+
+        Employee employeeData = employeeRepository.findById(employeeId).get();
+
+        employeeData.setIsActive(false);
+
+        employeeRepository.save(employeeData);
+
+        return ResponseEntity.ok().build();
     }
 }
