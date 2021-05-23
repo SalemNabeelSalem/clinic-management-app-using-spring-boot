@@ -1,0 +1,14 @@
+server:
+  port: 9000 # server publishing port number.
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/clinic_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: root
+  jpa:
+    show-sql: true # log jpa queries - only for testing purpose - [comment this in production].
+    hibernate:
+      ddl-auto: update # only for testing purpose - [comment this in production].
+    properties:
+      hibernate: # makes hibernate generate better sql for the chosen database.
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
