@@ -2,6 +2,7 @@ package com.bit.services;
 
 import com.bit.dtos.patient_reservation.CreatePatientReservationDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
+import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
 import com.bit.entities.Employee;
 import com.bit.entities.PatientReservation;
 import com.bit.exceptions.ResourceNotFoundException;
@@ -9,6 +10,7 @@ import com.bit.repositories.EmployeeRepository;
 import com.bit.repositories.PatientReservationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,5 +63,56 @@ public class PatientReservationService {
         return modelMapper.map(
             patientReservationRepository.save(patientReservationData), ShowPatientReservationDto.class
         );
+    }
+
+    public ShowPatientReservationDto updatePatientReservation(Long patientReservationId,
+                                                              UpdatePatientReservationDto patientReservationRequest) {
+
+        if (patientReservationRepository.findById(patientReservationId).isEmpty()) {
+
+            throw new ResourceNotFoundException(
+                "patient reservationId with id: [" + patientReservationId + "] is not found."
+            );
+        }
+
+        PatientReservation patientReservationData = patientReservationRepository.findById(patientReservationId).get();
+
+        Long employeeId = patientReservationRequest.getEmployeeId();
+
+        if (employeeRepository.findById(employeeId).isEmpty()) {
+
+            throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
+        }
+
+        Employee employeeData = employeeRepository.findById(employeeId).get();
+
+        patientReservationData.setFullName(patientReservationRequest.getFullName());
+        patientReservationData.setGender(patientReservationRequest.getGender());
+        patientReservationData.setEmail(patientReservationRequest.getEmail());
+        patientReservationData.setPhone(patientReservationRequest.getPhone());
+        patientReservationData.setFeeling(patientReservationRequest.getFeeling());
+        patientReservationData.setEmployee(employeeData);
+
+        return modelMapper.map(
+            patientReservationRepository.save(patientReservationData), ShowPatientReservationDto.class
+        );
+    }
+
+    public ResponseEntity deletePatientReservation(Long patientReservationId) {
+
+        if (patientReservationRepository.findById(patientReservationId).isEmpty()) {
+
+            throw new ResourceNotFoundException(
+                "patient reservationId with id: [" + patientReservationId + "] is not found."
+            );
+        }
+
+        PatientReservation patientReservationData = patientReservationRepository.findById(patientReservationId).get();
+
+        patientReservationData.setIsActive(false);
+
+        patientReservationRepository.save(patientReservationData);
+
+        return ResponseEntity.ok().build();
     }
 }
