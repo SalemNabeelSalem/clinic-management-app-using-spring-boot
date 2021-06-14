@@ -17,20 +17,20 @@ public class PatientReservationController {
     @Autowired
     private PatientReservationService patientReservationService;
 
-    @GetMapping("/patient_reservation")
+    @GetMapping("/patients-reservations")
     public List<ShowPatientReservationDto> findAllPatientsReservations() {
 
         return patientReservationService.findAllPatientsReservations();
     }
 
-    @PostMapping("/patient_reservation")
+    @PostMapping("/patients-reservations")
     public ShowPatientReservationDto createNewPatientReservation(
-            @RequestBody CreatePatientReservationDto PatientReservationRequest) {
+            @RequestBody CreatePatientReservationDto patientReservationRequest) {
 
-        return patientReservationService.createNewPatientReservation(PatientReservationRequest);
+        return patientReservationService.createNewPatientReservation(patientReservationRequest);
     }
 
-    @PutMapping("/patient_reservation/{id}")
+    @PutMapping("/patients-reservations/{id}")
     public ShowPatientReservationDto updatePatientReservation(
             @PathVariable("id") Long patientReservationId,
             @RequestBody UpdatePatientReservationDto patientReservationRequest) {
@@ -40,7 +40,7 @@ public class PatientReservationController {
         );
     }
 
-    @DeleteMapping("/patient_reservation/{id}")
+    @DeleteMapping("/patients-reservations/{id}")
     public ResponseEntity deletePatientReservation(@PathVariable("id") Long patientReservationId) {
 
         return patientReservationService.deletePatientReservation(patientReservationId);

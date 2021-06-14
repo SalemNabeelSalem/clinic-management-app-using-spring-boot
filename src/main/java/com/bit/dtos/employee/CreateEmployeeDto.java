@@ -11,13 +11,11 @@ public class CreateEmployeeDto {
 
     private Gender gender;
 
-    private String email;
+    private String username;
 
     private String password;
 
     private String phone;
-
-    private String image;
 
     private Role role;
 }

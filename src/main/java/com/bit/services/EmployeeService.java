@@ -39,13 +39,16 @@ public class EmployeeService {
         Employee employeeData = new Employee();
 
         employeeData.setFullName(employeeRequest.getFullName());
+
         employeeData.setGender(employeeRequest.getGender());
-        employeeData.setEmail(employeeRequest.getEmail());
+
+        employeeData.setUserName(employeeRequest.getUsername());
+
         employeeData.setPassword(employeeRequest.getPassword());
+
         employeeData.setPhone(employeeRequest.getPhone());
-        employeeData.setImage(employeeRequest.getImage());
+
         employeeData.setRole(employeeRequest.getRole());
-        employeeData.setIsActive(true);
 
         return modelMapper.map(
             employeeRepository.save(employeeData), ShowEmployeeDto.class
@@ -62,10 +65,16 @@ public class EmployeeService {
         Employee employeeData = employeeRepository.findById(employeeId).get();
 
         employeeData.setFullName(employeeRequest.getFullName());
+
         employeeData.setGender(employeeRequest.getGender());
-        employeeData.setEmail(employeeRequest.getEmail());
+
+        employeeData.setUserName(employeeRequest.getUserName());
+
+        employeeData.setPassword(employeeRequest.getPassword());
+
         employeeData.setPhone(employeeRequest.getPhone());
-        employeeData.setImage(employeeRequest.getImage());
+
+        employeeData.setRole(employeeRequest.getRole());
 
         return modelMapper.map(
             employeeRepository.save(employeeData), ShowEmployeeDto.class
@@ -81,9 +90,7 @@ public class EmployeeService {
 
         Employee employeeData = employeeRepository.findById(employeeId).get();
 
-        employeeData.setIsActive(false);
-
-        employeeRepository.save(employeeData);
+        employeeRepository.delete(employeeData);
 
         return ResponseEntity.ok().build();
     }

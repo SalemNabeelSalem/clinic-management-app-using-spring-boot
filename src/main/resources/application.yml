@@ -1,14 +1,32 @@
 server:
-  port: 9000 # server publishing port number.
+  port: 9409 # server publishing port number.
 
 spring:
+  application:
+    name: b5it-final-project-client-app
   datasource:
     url: jdbc:mysql://localhost:3306/clinic_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
     username: root
   jpa:
     show-sql: true # log jpa queries - only for testing purpose - [comment this in production].
     hibernate:
-      ddl-auto: update # only for testing purpose - [comment this in production].
+      ddl-auto: create-drop # only for testing purpose - [comment this in production].
     properties:
       hibernate: # makes hibernate generate better sql for the chosen database.
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  mail:
+    host: localhost
+    port: 25
+    username: test
+    password: test
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000

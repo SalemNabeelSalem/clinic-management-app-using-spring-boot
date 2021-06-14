@@ -30,9 +30,10 @@ public class PatientReservationService {
 
     public List<ShowPatientReservationDto> findAllPatientsReservations() {
 
-        List<PatientReservation> sortedPatientsReservationsList = patientReservationRepository.findAll().stream().sorted(
-            (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
-        ).collect(Collectors.toList());
+        List<PatientReservation> sortedPatientsReservationsList = patientReservationRepository.findAll()
+            .stream().sorted(
+                (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
+            ).collect(Collectors.toList());
 
         return sortedPatientsReservationsList.stream().map(
             obj -> modelMapper.map(obj, ShowPatientReservationDto.class)

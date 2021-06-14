@@ -1,6 +1,7 @@
 package com.bit.dtos.patient_reservation;
 
 import com.bit.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,9 +21,13 @@ public class ShowPatientReservationDto {
 
     private String feeling;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createdAt;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
+
+    private String employeeFullName;
 
     private Boolean isActive;
 }
