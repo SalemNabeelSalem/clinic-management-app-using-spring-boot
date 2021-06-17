@@ -58,7 +58,6 @@ public class PatientReservationService {
         patientReservationData.setEmail(patientReservationRequest.getEmail());
         patientReservationData.setPhone(patientReservationRequest.getPhone());
         patientReservationData.setFeeling(patientReservationRequest.getFeeling());
-        patientReservationData.setIsActive(true);
         patientReservationData.setEmployee(employeeData);
 
         return modelMapper.map(
@@ -109,8 +108,6 @@ public class PatientReservationService {
         }
 
         PatientReservation patientReservationData = patientReservationRepository.findById(patientReservationId).get();
-
-        patientReservationData.setIsActive(false);
 
         patientReservationRepository.save(patientReservationData);
 

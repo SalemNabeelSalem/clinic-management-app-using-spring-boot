@@ -41,7 +41,7 @@ paths:
             $ref: "#/definitions/CreateEmployeeDto"
       responses:
         200:
-          description: "Success"
+          description: "OK"
 
   /api/v1/employees/{id}:
     put:
@@ -67,7 +67,7 @@ paths:
             $ref: "#/definitions/UpdateEmployeeDto"
       responses:
         200:
-          description: "Success"
+          description: "OK"
     delete:
       tags:
         - "employees"
@@ -126,7 +126,7 @@ definitions:
         example: "FEMALE"
       username:
         type: "string"
-        example: "soa5"
+        example: "sahar"
       password:
         type: "string"
         example: "12345"
@@ -157,7 +157,8 @@ definitions:
         example: "777666555"
       role:
         type: "string"
-        example: "RECEPTIONIST"
+        enum:
+          - "RECEPTIONIST"
 
   CreatePatientReservationDto:
     type: "object"

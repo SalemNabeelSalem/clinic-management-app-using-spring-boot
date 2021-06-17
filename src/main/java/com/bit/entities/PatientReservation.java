@@ -36,7 +36,4 @@ public class PatientReservation extends AuditModel {
     @JoinColumn(name = "employee_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Employee employee;
-
-    @Column(name = "is_active")
-    private Boolean isActive;
 }

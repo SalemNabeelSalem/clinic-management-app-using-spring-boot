@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true # log jpa queries - only for testing purpose - [comment this in production].
     hibernate:
-      ddl-auto: create-drop # only for testing purpose - [comment this in production].
+      ddl-auto: update # only for testing purpose - [comment this in production].
     properties:
       hibernate: # makes hibernate generate better sql for the chosen database.
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
