@@ -1,11 +1,11 @@
-package com.bit.dtos.employee;
+package com.bit.dtos.doctor;
 
+import com.bit.enums.DoctorType;
 import com.bit.enums.Gender;
-import com.bit.enums.Role;
 import lombok.Data;
 
 @Data
-public class CreateEmployeeDto {
+public class CreateDoctorDto {
 
     private String fullName;
 
@@ -13,7 +13,7 @@ public class CreateEmployeeDto {
 
     private String phone;
 
-    private Role role;
+    private DoctorType type;
 
     private String username;
 

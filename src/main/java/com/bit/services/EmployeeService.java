@@ -42,13 +42,13 @@ public class EmployeeService {
 
         employeeData.setGender(employeeRequest.getGender());
 
-        employeeData.setUserName(employeeRequest.getUsername());
-
-        employeeData.setPassword(employeeRequest.getPassword());
-
         employeeData.setPhone(employeeRequest.getPhone());
 
         employeeData.setRole(employeeRequest.getRole());
+
+        employeeData.setUserName(employeeRequest.getUsername());
+
+        employeeData.setPassword(employeeRequest.getPassword());
 
         return modelMapper.map(
             employeeRepository.save(employeeData), ShowEmployeeDto.class
@@ -68,13 +68,13 @@ public class EmployeeService {
 
         employeeData.setGender(employeeRequest.getGender());
 
-        employeeData.setUserName(employeeRequest.getUserName());
-
-        employeeData.setPassword(employeeRequest.getPassword());
-
         employeeData.setPhone(employeeRequest.getPhone());
 
         employeeData.setRole(employeeRequest.getRole());
+
+        employeeData.setUserName(employeeRequest.getUserName());
+
+        employeeData.setPassword(employeeRequest.getPassword());
 
         return modelMapper.map(
             employeeRepository.save(employeeData), ShowEmployeeDto.class

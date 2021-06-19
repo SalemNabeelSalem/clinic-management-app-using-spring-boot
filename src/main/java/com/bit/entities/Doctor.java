@@ -1,7 +1,7 @@
 package com.bit.entities;
 
+import com.bit.enums.DoctorType;
 import com.bit.enums.Gender;
-import com.bit.enums.Role;
 import com.bit.models.AuditModel;
 import lombok.Data;
 
@@ -9,8 +9,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "employees")
-public class Employee extends AuditModel {
+@Table(name = "doctors")
+public class Doctor extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class Employee extends AuditModel {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private DoctorType type;
 
     @Column(name = "user_name")
     private String userName;

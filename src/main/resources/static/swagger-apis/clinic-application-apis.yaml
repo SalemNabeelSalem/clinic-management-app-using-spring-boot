@@ -9,6 +9,8 @@ schemes:
 tags:
   - name: "employees"
     description: "all about apis of employees."
+  - name: "doctors"
+    description: "all about apis of doctors."
   - name: "patients-reservations"
     description: "all about apis of patients-reservations."
 paths:
@@ -81,7 +83,78 @@ paths:
           type: "string"
       responses:
         200:
-          description: "Success"
+          description: "OK"
+
+  /api/v1/doctors:
+    get:
+      tags:
+        - "doctors"
+      summary: "find all doctors."
+      description: "find all doctors."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+    post:
+      tags:
+        - "doctors"
+      summary: "create new doctor."
+      description: "create new doctor."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "doctorRequest"
+          description: "doctor data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateDoctorDto"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/doctors/{id}:
+    put:
+      tags:
+        - "doctors"
+      summary: "update doctor."
+      description: "update doctor."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+        - in: "body"
+          name: "doctorRequest"
+          description: "doctor data"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateDoctorDto"
+      responses:
+        200:
+          description: "OK"
+    delete:
+      tags:
+        - "doctors"
+      summary: "delete doctor."
+      description: "delete doctor."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
 
   /api/v1/patients-reservations:
     get:
@@ -112,46 +185,20 @@ paths:
             $ref: "#/definitions/CreatePatientReservationDto"
       responses:
         200:
-          description: "Success"
+          description: "OK"
 
 definitions:
-  UpdateEmployeeDto:
-    type: "object"
-    properties:
-      fullName:
-        type: "string"
-        example: "sahar omar ali"
-      gender:
-        type: "string"
-        example: "FEMALE"
-      username:
-        type: "string"
-        example: "sahar"
-      password:
-        type: "string"
-        example: "12345"
-      phone:
-        type: "string"
-        example: "777666555"
-      role:
-        type: "string"
-        example: "RECEPTIONIST"
-
   CreateEmployeeDto:
     type: "object"
     properties:
       fullName:
         type: "string"
-        example: "sahar omar ali"
+        example: "Sahar Omar Ali"
       gender:
         type: "string"
-        example: "FEMALE"
-      username:
-        type: "string"
-        example: "soa5"
-      password:
-        type: "string"
-        example: "12345"
+        enum:
+          - "FEMALE"
+          - "MALE"
       phone:
         type: "string"
         example: "777666555"
@@ -159,6 +206,86 @@ definitions:
         type: "string"
         enum:
           - "RECEPTIONIST"
+      username:
+        type: "string"
+        example: "sahar"
+      password:
+        type: "string"
+        example: "12345"
+
+  UpdateEmployeeDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "Sahar Omar Ali"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      role:
+        type: "string"
+        example: "RECEPTIONIST"
+      username:
+        type: "string"
+        example: "sahar"
+      password:
+        type: "string"
+        example: "12345"
+
+  CreateDoctorDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "DR. Amal Ali Salem"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      type:
+        type: "string"
+        enum:
+          - "GENERAL"
+      username:
+        type: "string"
+        example: "amal"
+      password:
+        type: "string"
+        example: "12345"
+
+  UpdateDoctorDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "DR. Amal Ali Salem"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      type:
+        type: "string"
+        enum:
+          - "GENERAL"
+      username:
+        type: "string"
+        example: "amal"
+      password:
+        type: "string"
+        example: "12345"
 
   CreatePatientReservationDto:
     type: "object"
@@ -168,7 +295,9 @@ definitions:
         example: "anwar ahmed ali"
       gender:
         type: "string"
-        example: "FEMALE"
+        enum:
+          - "FEMALE"
+          - "MALE"
       email:
         type: "string"
         example: "anwar@gmail.com"

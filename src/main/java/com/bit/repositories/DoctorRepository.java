@@ -1,9 +1,9 @@
 package com.bit.repositories;
 
-import com.bit.entities.Employee;
+import com.bit.entities.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 }

@@ -11,11 +11,11 @@ public class UpdateEmployeeDto {
 
     private Gender gender;
 
-    private String userName;
-
-    private String password;
-
     private String phone;
 
     private Role role;
+
+    private String userName;
+
+    private String password;
 }
