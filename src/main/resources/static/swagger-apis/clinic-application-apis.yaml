@@ -206,7 +206,7 @@ definitions:
         type: "string"
         enum:
           - "RECEPTIONIST"
-      username:
+      userName:
         type: "string"
         example: "sahar"
       password:
@@ -230,7 +230,7 @@ definitions:
       role:
         type: "string"
         example: "RECEPTIONIST"
-      username:
+      userName:
         type: "string"
         example: "sahar"
       password:
@@ -255,7 +255,7 @@ definitions:
         type: "string"
         enum:
           - "GENERAL"
-      username:
+      userName:
         type: "string"
         example: "amal"
       password:
@@ -280,7 +280,7 @@ definitions:
         type: "string"
         enum:
           - "GENERAL"
-      username:
+      userName:
         type: "string"
         example: "amal"
       password:

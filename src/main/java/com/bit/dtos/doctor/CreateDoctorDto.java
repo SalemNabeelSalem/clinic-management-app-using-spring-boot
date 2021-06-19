@@ -15,7 +15,7 @@ public class CreateDoctorDto {
 
     private DoctorType type;
 
-    private String username;
+    private String userName;
 
     private String password;
 }

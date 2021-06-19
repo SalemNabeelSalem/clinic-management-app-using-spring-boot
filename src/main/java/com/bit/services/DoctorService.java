@@ -46,7 +46,7 @@ public class DoctorService {
 
         doctorData.setType(doctorRequest.getType());
 
-        doctorData.setUserName(doctorRequest.getUsername());
+        doctorData.setUserName(doctorRequest.getUserName());
 
         doctorData.setPassword(doctorRequest.getPassword());
 
