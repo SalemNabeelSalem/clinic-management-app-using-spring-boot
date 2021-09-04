@@ -7,19 +7,19 @@ host: "127.0.0.1:9409"
 schemes:
   - "http"
 tags:
-  - name: "employees"
-    description: "all about apis of employees."
+  - name: "receptionist"
+    description: "all about apis of receptionist."
   - name: "doctors"
     description: "all about apis of doctors."
   - name: "patients-reservations"
     description: "all about apis of patients-reservations."
 paths:
-  /api/v1/employees:
+  /api/v1/receptionists:
     get:
       tags:
-        - "employees"
-      summary: "find all employees."
-      description: "find all employees."
+        - "receptionist"
+      summary: "find all receptionists."
+      description: "find all receptionists."
       produces:
         - "application/json"
       responses:
@@ -27,30 +27,30 @@ paths:
           description: "OK"
     post:
       tags:
-        - "employees"
-      summary: "create new employee."
-      description: "create new employee."
+        - "receptionist"
+      summary: "create new receptionist."
+      description: "create new receptionist."
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
         - in: "body"
-          name: "employeeRequest"
-          description: "employee data"
+          name: "receptionistRequest"
+          description: "receptionist data"
           required: true
           schema:
-            $ref: "#/definitions/CreateEmployeeDto"
+            $ref: "#/definitions/CreateReceptionistDto"
       responses:
         200:
           description: "OK"
 
-  /api/v1/employees/{id}:
+  /api/v1/receptionists/{id}:
     put:
       tags:
-        - "employees"
-      summary: "update employee."
-      description: "update employee."
+        - "receptionist"
+      summary: "update receptionist."
+      description: "update receptionist."
       consumes:
         - "application/json"
       produces:
@@ -58,27 +58,45 @@ paths:
       parameters:
         - in: "path"
           name: "id"
-          description: "the employee id."
+          description: "the receptionist id."
           required: true
           type: "string"
         - in: "body"
-          name: "employeeRequest"
-          description: "employees data"
+          name: "receptionistRequest"
+          description: "receptionist data"
           required: true
           schema:
-            $ref: "#/definitions/UpdateEmployeeDto"
+            $ref: "#/definitions/UpdateReceptionistDto"
       responses:
         200:
           description: "OK"
+
+  /api/v1/receptionists/{id}/deactivate:
     delete:
       tags:
-        - "employees"
-      summary: "delete employee."
-      description: "delete employee."
+        - "receptionist"
+      summary: "deactivate receptionist."
+      description: "deactivate receptionist."
       parameters:
         - in: "path"
           name: "id"
-          description: "the employee id."
+          description: "the receptionist id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/receptionists/{id}/activate:
+    put:
+      tags:
+        - "receptionist"
+      summary: "activate receptionist."
+      description: "activate receptionist."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the receptionist id."
           required: true
           type: "string"
       responses:
@@ -188,7 +206,7 @@ paths:
           description: "OK"
 
 definitions:
-  CreateEmployeeDto:
+  CreateReceptionistDto:
     type: "object"
     properties:
       fullName:
@@ -202,10 +220,9 @@ definitions:
       phone:
         type: "string"
         example: "777666555"
-      role:
+      email:
         type: "string"
-        enum:
-          - "RECEPTIONIST"
+        example: "test@email.com"
       userName:
         type: "string"
         example: "sahar"
@@ -213,7 +230,7 @@ definitions:
         type: "string"
         example: "12345"
 
-  UpdateEmployeeDto:
+  UpdateReceptionistDto:
     type: "object"
     properties:
       fullName:
@@ -227,15 +244,9 @@ definitions:
       phone:
         type: "string"
         example: "777666555"
-      role:
+      email:
         type: "string"
-        example: "RECEPTIONIST"
-      userName:
-        type: "string"
-        example: "sahar"
-      password:
-        type: "string"
-        example: "12345"
+        example: "test@email.com"
 
   CreateDoctorDto:
     type: "object"

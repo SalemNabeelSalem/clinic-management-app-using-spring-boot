@@ -1,8 +1,8 @@
 package com.bit.services;
 
-import com.bit.dtos.employee.CreateEmployeeDto;
-import com.bit.dtos.employee.ShowEmployeeDto;
-import com.bit.dtos.employee.UpdateEmployeeDto;
+import com.bit.dtos.receptionist.CreateReceptionistDto;
+import com.bit.dtos.receptionist.ShowReceptionistDto;
+import com.bit.dtos.receptionist.UpdateReceptionistDto;
 import com.bit.entities.Receptionist;
 import com.bit.exceptions.ResourceNotFoundException;
 import com.bit.repositories.ReceptionistRepository;
@@ -23,74 +23,90 @@ public class ReceptionistService {
     @Autowired
     private ReceptionistRepository receptionistRepository;
 
-    public List<ShowEmployeeDto> findAllEmployees() {
+    public List<ShowReceptionistDto> findAllReceptionists() {
 
         List<Receptionist> sortedEmployeesList = receptionistRepository.findAll().stream().sorted(
             (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
         ).collect(Collectors.toList());
 
         return sortedEmployeesList.stream().map(
-            obj -> modelMapper.map(obj, ShowEmployeeDto.class)
+            obj -> modelMapper.map(obj, ShowReceptionistDto.class)
         ).collect(Collectors.toList());
     }
 
-    public ShowEmployeeDto createNewEmployee(CreateEmployeeDto employeeRequest) {
+    public ShowReceptionistDto createNewReceptionist(CreateReceptionistDto receptionistInput) {
 
-        Receptionist receptionistData = new Receptionist();
+        Receptionist receptionist = new Receptionist();
 
-        receptionistData.setFullName(employeeRequest.getFullName());
+        receptionist.setFullName(receptionistInput.getFullName());
 
-        receptionistData.setGender(employeeRequest.getGender());
+        receptionist.setGender(receptionistInput.getGender());
 
-        receptionistData.setPhone(employeeRequest.getPhone());
+        receptionist.setPhone(receptionistInput.getPhone());
 
-        receptionistData.setRole(employeeRequest.getRole());
+        receptionist.setEmail(receptionistInput.getEmail());
 
-        receptionistData.setUserName(employeeRequest.getUsername());
+        receptionist.setUserName(receptionistInput.getUserName());
 
-        receptionistData.setPassword(employeeRequest.getPassword());
+        receptionist.setPassword(receptionistInput.getPassword());
+
+        receptionist.setIsActive(true);
 
         return modelMapper.map(
-            receptionistRepository.save(receptionistData), ShowEmployeeDto.class
+            receptionistRepository.save(receptionist), ShowReceptionistDto.class
         );
     }
 
-    public ShowEmployeeDto updateEmployee(Long employeeId, UpdateEmployeeDto employeeRequest) {
+    public ShowReceptionistDto updateReceptionist(Long receptionistId, UpdateReceptionistDto receptionistInput) {
 
-        if (receptionistRepository.findById(employeeId).isEmpty()) {
+        if (receptionistRepository.findById(receptionistId).isEmpty()) {
 
-            throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
+            throw new ResourceNotFoundException("receptionist with id: [" + receptionistId + "] is not found.");
         }
 
-        Receptionist receptionistData = receptionistRepository.findById(employeeId).get();
+        Receptionist receptionist = receptionistRepository.findById(receptionistId).get();
 
-        receptionistData.setFullName(employeeRequest.getFullName());
+        receptionist.setFullName(receptionistInput.getFullName());
 
-        receptionistData.setGender(employeeRequest.getGender());
+        receptionist.setGender(receptionistInput.getGender());
 
-        receptionistData.setPhone(employeeRequest.getPhone());
+        receptionist.setPhone(receptionistInput.getPhone());
 
-        receptionistData.setRole(employeeRequest.getRole());
-
-        receptionistData.setUserName(employeeRequest.getUserName());
-
-        receptionistData.setPassword(employeeRequest.getPassword());
+        receptionist.setEmail(receptionistInput.getEmail());
 
         return modelMapper.map(
-            receptionistRepository.save(receptionistData), ShowEmployeeDto.class
+            receptionistRepository.save(receptionist), ShowReceptionistDto.class
         );
     }
 
-    public ResponseEntity deleteEmployee(Long employeeId) {
+    public ResponseEntity deactivateReceptionist(Long receptionistId) {
 
-        if (receptionistRepository.findById(employeeId).isEmpty()) {
+        if (receptionistRepository.findById(receptionistId).isEmpty()) {
 
-            throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
+            throw new ResourceNotFoundException("receptionist with id: [" + receptionistId + "] is not found.");
         }
 
-        Receptionist receptionistData = receptionistRepository.findById(employeeId).get();
+        Receptionist receptionist = receptionistRepository.findById(receptionistId).get();
 
-        receptionistRepository.delete(receptionistData);
+        receptionist.setIsActive(false);
+
+        receptionistRepository.save(receptionist);
+
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity activateReceptionist(Long receptionistId) {
+
+        if (receptionistRepository.findById(receptionistId).isEmpty()) {
+
+            throw new ResourceNotFoundException("receptionist with id: [" + receptionistId + "] is not found.");
+        }
+
+        Receptionist receptionist = receptionistRepository.findById(receptionistId).get();
+
+        receptionist.setIsActive(true);
+
+        receptionistRepository.save(receptionist);
 
         return ResponseEntity.ok().build();
     }

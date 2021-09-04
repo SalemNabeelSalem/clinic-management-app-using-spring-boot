@@ -1,14 +1,13 @@
-package com.bit.dtos.employee;
+package com.bit.dtos.receptionist;
 
 import com.bit.enums.Gender;
-import com.bit.enums.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class ShowEmployeeDto {
+public class ShowReceptionistDto {
 
     private Long id;
 
@@ -18,11 +17,13 @@ public class ShowEmployeeDto {
 
     private String phone;
 
-    private Role role;
+    private String email;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createdAt;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
+
+    private Boolean isActive;
 }

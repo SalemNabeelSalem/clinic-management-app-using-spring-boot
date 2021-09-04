@@ -1,8 +1,8 @@
 package com.bit.controllers;
 
-import com.bit.dtos.employee.CreateEmployeeDto;
-import com.bit.dtos.employee.ShowEmployeeDto;
-import com.bit.dtos.employee.UpdateEmployeeDto;
+import com.bit.dtos.receptionist.CreateReceptionistDto;
+import com.bit.dtos.receptionist.ShowReceptionistDto;
+import com.bit.dtos.receptionist.UpdateReceptionistDto;
 import com.bit.services.ReceptionistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,28 +17,34 @@ public class ReceptionistController {
     @Autowired
     private ReceptionistService receptionistService;
 
-    @GetMapping("/employees")
-    public List<ShowEmployeeDto> findAllEmployees() {
+    @GetMapping("/receptionists")
+    public List<ShowReceptionistDto> findAllReceptionists() {
 
-        return receptionistService.findAllEmployees();
+        return receptionistService.findAllReceptionists();
     }
 
-    @PostMapping("/employees")
-    public ShowEmployeeDto createNewEmployee(@RequestBody CreateEmployeeDto employeeRequest) {
+    @PostMapping("/receptionists")
+    public ShowReceptionistDto createNewReceptionist(@RequestBody CreateReceptionistDto receptionistRequest) {
 
-        return receptionistService.createNewEmployee(employeeRequest);
+        return receptionistService.createNewReceptionist(receptionistRequest);
     }
 
-    @PutMapping("/employees/{id}")
-    public ShowEmployeeDto updateEmployee(@PathVariable("id") Long employeeId,
-                                          @RequestBody UpdateEmployeeDto employeeRequest) {
+    @PutMapping("/receptionists/{id}")
+    public ShowReceptionistDto updateReceptionist(@PathVariable("id") Long receptionistId,
+                                                  @RequestBody UpdateReceptionistDto receptionistRequest) {
 
-        return receptionistService.updateEmployee(employeeId, employeeRequest);
+        return receptionistService.updateReceptionist(receptionistId, receptionistRequest);
     }
 
-    @DeleteMapping("/employees/{id}")
-    public ResponseEntity deleteEmployee(@PathVariable("id") Long employeeId) {
+    @DeleteMapping("/receptionists/{id}/deactivate")
+    public ResponseEntity deactivateReceptionist(@PathVariable("id") Long receptionistId) {
 
-        return receptionistService.deleteEmployee(employeeId);
+        return receptionistService.deactivateReceptionist(receptionistId);
+    }
+
+    @PutMapping("/receptionists/{id}/activate")
+    public ResponseEntity activateReceptionist(@PathVariable("id") Long receptionistId) {
+
+        return receptionistService.activateReceptionist(receptionistId);
     }
 }
