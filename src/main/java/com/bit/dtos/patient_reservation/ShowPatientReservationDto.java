@@ -15,6 +15,8 @@ public class ShowPatientReservationDto {
 
     private Gender gender;
 
+    private Integer age;
+
     private String email;
 
     private String phone;
@@ -27,5 +29,5 @@ public class ShowPatientReservationDto {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
 
-    private String employeeFullName;
+    private String receptionistFullName;
 }

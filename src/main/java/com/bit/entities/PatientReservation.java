@@ -24,6 +24,8 @@ public class PatientReservation extends AuditModel {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    private Integer age;
+
     private String email;
 
     private String phone;
@@ -33,7 +35,7 @@ public class PatientReservation extends AuditModel {
 
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "receptionist_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Receptionist receptionist;
 }

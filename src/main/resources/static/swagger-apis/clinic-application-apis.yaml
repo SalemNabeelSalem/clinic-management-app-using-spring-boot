@@ -9,10 +9,10 @@ schemes:
 tags:
   - name: "receptionist"
     description: "all about apis of receptionist."
-  - name: "doctors"
-    description: "all about apis of doctors."
   - name: "patients-reservations"
     description: "all about apis of patients-reservations."
+  - name: "doctors"
+    description: "all about apis of doctors."
 paths:
   /api/v1/receptionists:
     get:
@@ -103,6 +103,48 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/receptionists/{id}/patients-reservations:
+    get:
+      tags:
+        - "patients-reservations"
+      summary: "find all patients-reservations by receptionist id."
+      description: "find all patients-reservations by receptionist id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the receptionist id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+    post:
+      tags:
+        - "patients-reservations"
+      summary: "create new patient-reservation."
+      description: "create new patient-reservation."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the receptionist id."
+          required: true
+          type: "string"
+        - in: "body"
+          name: "patientReservationRequest"
+          description: "patient reservation data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreatePatientReservationDto"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/doctors:
     get:
       tags:
@@ -170,37 +212,6 @@ paths:
           description: "the doctor id."
           required: true
           type: "string"
-      responses:
-        200:
-          description: "OK"
-
-  /api/v1/patients-reservations:
-    get:
-      tags:
-        - "patients-reservations"
-      summary: "find all patients-reservations."
-      description: "find all patients-reservations."
-      produces:
-        - "application/json"
-      responses:
-        200:
-          description: "OK"
-    post:
-      tags:
-        - "patients-reservations"
-      summary: "create new patient-reservation."
-      description: "create new patient-reservation."
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "patientReservationRequest"
-          description: "patient reservation data"
-          required: true
-          schema:
-            $ref: "#/definitions/CreatePatientReservationDto"
       responses:
         200:
           description: "OK"
@@ -309,15 +320,15 @@ definitions:
         enum:
           - "FEMALE"
           - "MALE"
+      age:
+        type: integer
+        example: 20
       email:
         type: "string"
-        example: "anwar@gmail.com"
+        example: "test@email.com"
       phone:
         type: "string"
         example: "777666555"
       feeling:
         type: "string"
         example: "she is very sick."
-      employeeId:
-        type: "string"
-        example: "1"

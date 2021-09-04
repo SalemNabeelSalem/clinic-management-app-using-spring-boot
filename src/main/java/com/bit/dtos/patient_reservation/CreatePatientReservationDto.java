@@ -10,11 +10,11 @@ public class CreatePatientReservationDto {
 
     private Gender gender;
 
+    private Integer age;
+
     private String email;
 
     private String phone;
 
     private String feeling;
-
-    private Long employeeId;
 }

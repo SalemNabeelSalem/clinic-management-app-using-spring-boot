@@ -17,17 +17,17 @@ public class PatientReservationController {
     @Autowired
     private PatientReservationService patientReservationService;
 
-    @GetMapping("/patients-reservations")
-    public List<ShowPatientReservationDto> findAllPatientsReservations() {
+    @GetMapping("/receptionists/{id}/patients-reservations")
+    public List<ShowPatientReservationDto> findAllPatientsReservationsByReceptionistId(@PathVariable("id") Long receptionistId) {
 
-        return patientReservationService.findAllPatientsReservations();
+        return patientReservationService.findAllPatientsReservationsByReceptionistId(receptionistId);
     }
 
-    @PostMapping("/patients-reservations")
-    public ShowPatientReservationDto createNewPatientReservation(
-            @RequestBody CreatePatientReservationDto patientReservationRequest) {
+    @PostMapping("/receptionists/{id}/patients-reservations")
+    public ShowPatientReservationDto createNewPatientReservationByReceptionistId(
+            @PathVariable("id") Long receptionistId, @RequestBody CreatePatientReservationDto patientReservationRequest) {
 
-        return patientReservationService.createNewPatientReservation(patientReservationRequest);
+        return patientReservationService.createNewPatientReservationByReceptionistId(receptionistId, patientReservationRequest);
     }
 
     @PutMapping("/patients-reservations/{id}")

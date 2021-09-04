@@ -3,11 +3,11 @@ package com.bit.services;
 import com.bit.dtos.patient_reservation.CreatePatientReservationDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
-import com.bit.entities.Receptionist;
 import com.bit.entities.PatientReservation;
+import com.bit.entities.Receptionist;
 import com.bit.exceptions.ResourceNotFoundException;
-import com.bit.repositories.ReceptionistRepository;
 import com.bit.repositories.PatientReservationRepository;
+import com.bit.repositories.ReceptionistRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +28,13 @@ public class PatientReservationService {
     @Autowired
     private ReceptionistRepository receptionistRepository;
 
-    public List<ShowPatientReservationDto> findAllPatientsReservations() {
+    public List<ShowPatientReservationDto> findAllPatientsReservationsByReceptionistId(Long receptionistId) {
 
-        List<PatientReservation> sortedPatientsReservationsList = patientReservationRepository.findAll()
+        Receptionist receptionist = receptionistRepository.findById(receptionistId).orElseThrow(
+            () -> new ResourceNotFoundException("receptionist with id: [" + receptionistId + "] is not found.")
+        );
+
+        List<PatientReservation> sortedPatientsReservationsList = patientReservationRepository.findAllByReceptionist(receptionist)
             .stream().sorted(
                 (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
             ).collect(Collectors.toList());
@@ -40,28 +44,28 @@ public class PatientReservationService {
         ).collect(Collectors.toList());
     }
 
-    public ShowPatientReservationDto createNewPatientReservation(CreatePatientReservationDto patientReservationRequest) {
+    public ShowPatientReservationDto createNewPatientReservationByReceptionistId(
+            Long receptionistId, CreatePatientReservationDto patientReservationInput) {
 
-        Long employeeId = patientReservationRequest.getEmployeeId();
+        if (receptionistRepository.findById(receptionistId).isEmpty()) {
 
-        if (receptionistRepository.findById(employeeId).isEmpty()) {
-
-            throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
+            throw new ResourceNotFoundException("employee with id: [" + receptionistId + "] is not found.");
         }
 
-        Receptionist receptionistData = receptionistRepository.findById(employeeId).get();
+        Receptionist receptionist = receptionistRepository.findById(receptionistId).get();
 
-        PatientReservation patientReservationData = new PatientReservation();
+        PatientReservation patientReservation = new PatientReservation();
 
-        patientReservationData.setFullName(patientReservationRequest.getFullName());
-        patientReservationData.setGender(patientReservationRequest.getGender());
-        patientReservationData.setEmail(patientReservationRequest.getEmail());
-        patientReservationData.setPhone(patientReservationRequest.getPhone());
-        patientReservationData.setFeeling(patientReservationRequest.getFeeling());
-        patientReservationData.setReceptionist(receptionistData);
+        patientReservation.setFullName(patientReservationInput.getFullName());
+        patientReservation.setGender(patientReservationInput.getGender());
+        patientReservation.setAge(patientReservationInput.getAge());
+        patientReservation.setEmail(patientReservationInput.getEmail());
+        patientReservation.setPhone(patientReservationInput.getPhone());
+        patientReservation.setFeeling(patientReservationInput.getFeeling());
+        patientReservation.setReceptionist(receptionist);
 
         return modelMapper.map(
-            patientReservationRepository.save(patientReservationData), ShowPatientReservationDto.class
+                patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
         );
     }
 
