@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface PatientReservationRepository extends JpaRepository<PatientReservation, Long> {
 
-    @Query(value = "SELECT * FROM patient_reservations WHERE is_active = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM patients_reservations WHERE is_active = 1", nativeQuery = true)
     List<PatientReservation> findAll();
 }

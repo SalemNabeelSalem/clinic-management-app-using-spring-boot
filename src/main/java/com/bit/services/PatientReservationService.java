@@ -3,10 +3,10 @@ package com.bit.services;
 import com.bit.dtos.patient_reservation.CreatePatientReservationDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
-import com.bit.entities.Employee;
+import com.bit.entities.Receptionist;
 import com.bit.entities.PatientReservation;
 import com.bit.exceptions.ResourceNotFoundException;
-import com.bit.repositories.EmployeeRepository;
+import com.bit.repositories.ReceptionistRepository;
 import com.bit.repositories.PatientReservationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PatientReservationService {
     private PatientReservationRepository patientReservationRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private ReceptionistRepository receptionistRepository;
 
     public List<ShowPatientReservationDto> findAllPatientsReservations() {
 
@@ -44,12 +44,12 @@ public class PatientReservationService {
 
         Long employeeId = patientReservationRequest.getEmployeeId();
 
-        if (employeeRepository.findById(employeeId).isEmpty()) {
+        if (receptionistRepository.findById(employeeId).isEmpty()) {
 
             throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
         }
 
-        Employee employeeData = employeeRepository.findById(employeeId).get();
+        Receptionist receptionistData = receptionistRepository.findById(employeeId).get();
 
         PatientReservation patientReservationData = new PatientReservation();
 
@@ -58,7 +58,7 @@ public class PatientReservationService {
         patientReservationData.setEmail(patientReservationRequest.getEmail());
         patientReservationData.setPhone(patientReservationRequest.getPhone());
         patientReservationData.setFeeling(patientReservationRequest.getFeeling());
-        patientReservationData.setEmployee(employeeData);
+        patientReservationData.setReceptionist(receptionistData);
 
         return modelMapper.map(
             patientReservationRepository.save(patientReservationData), ShowPatientReservationDto.class
@@ -79,19 +79,19 @@ public class PatientReservationService {
 
         Long employeeId = patientReservationRequest.getEmployeeId();
 
-        if (employeeRepository.findById(employeeId).isEmpty()) {
+        if (receptionistRepository.findById(employeeId).isEmpty()) {
 
             throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
         }
 
-        Employee employeeData = employeeRepository.findById(employeeId).get();
+        Receptionist receptionistData = receptionistRepository.findById(employeeId).get();
 
         patientReservationData.setFullName(patientReservationRequest.getFullName());
         patientReservationData.setGender(patientReservationRequest.getGender());
         patientReservationData.setEmail(patientReservationRequest.getEmail());
         patientReservationData.setPhone(patientReservationRequest.getPhone());
         patientReservationData.setFeeling(patientReservationRequest.getFeeling());
-        patientReservationData.setEmployee(employeeData);
+        patientReservationData.setReceptionist(receptionistData);
 
         return modelMapper.map(
             patientReservationRepository.save(patientReservationData), ShowPatientReservationDto.class

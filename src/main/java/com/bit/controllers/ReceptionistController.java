@@ -3,7 +3,7 @@ package com.bit.controllers;
 import com.bit.dtos.employee.CreateEmployeeDto;
 import com.bit.dtos.employee.ShowEmployeeDto;
 import com.bit.dtos.employee.UpdateEmployeeDto;
-import com.bit.services.EmployeeService;
+import com.bit.services.ReceptionistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,33 +12,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-public class EmployeeController {
+public class ReceptionistController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private ReceptionistService receptionistService;
 
     @GetMapping("/employees")
     public List<ShowEmployeeDto> findAllEmployees() {
 
-        return employeeService.findAllEmployees();
+        return receptionistService.findAllEmployees();
     }
 
     @PostMapping("/employees")
     public ShowEmployeeDto createNewEmployee(@RequestBody CreateEmployeeDto employeeRequest) {
 
-        return employeeService.createNewEmployee(employeeRequest);
+        return receptionistService.createNewEmployee(employeeRequest);
     }
 
     @PutMapping("/employees/{id}")
     public ShowEmployeeDto updateEmployee(@PathVariable("id") Long employeeId,
                                           @RequestBody UpdateEmployeeDto employeeRequest) {
 
-        return employeeService.updateEmployee(employeeId, employeeRequest);
+        return receptionistService.updateEmployee(employeeId, employeeRequest);
     }
 
     @DeleteMapping("/employees/{id}")
     public ResponseEntity deleteEmployee(@PathVariable("id") Long employeeId) {
 
-        return employeeService.deleteEmployee(employeeId);
+        return receptionistService.deleteEmployee(employeeId);
     }
 }

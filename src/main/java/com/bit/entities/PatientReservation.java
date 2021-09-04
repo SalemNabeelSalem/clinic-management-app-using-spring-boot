@@ -35,5 +35,5 @@ public class PatientReservation extends AuditModel {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "employee_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Employee employee;
+    private Receptionist receptionist;
 }

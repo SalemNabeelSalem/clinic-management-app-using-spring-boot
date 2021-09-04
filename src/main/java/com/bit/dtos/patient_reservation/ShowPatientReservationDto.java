@@ -28,6 +28,4 @@ public class ShowPatientReservationDto {
     private Date updatedAt;
 
     private String employeeFullName;
-
-    private Boolean isActive;
 }
