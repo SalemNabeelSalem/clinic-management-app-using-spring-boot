@@ -57,6 +57,14 @@ public class ReceptionistService {
         );
     }
 
+    public ShowReceptionistDto findReceptionistById(Long receptionistId) {
+
+        return modelMapper.map(receptionistRepository.findById(receptionistId).orElseThrow(
+                () -> new ResourceNotFoundException("receptionist with id: [" + receptionistId + "] is not found.")
+            ), ShowReceptionistDto.class
+        );
+    }
+
     public ShowReceptionistDto updateReceptionist(Long receptionistId, UpdateReceptionistDto receptionistInput) {
 
         if (receptionistRepository.findById(receptionistId).isEmpty()) {

@@ -29,6 +29,12 @@ public class ReceptionistController {
         return receptionistService.createNewReceptionist(receptionistRequest);
     }
 
+    @GetMapping("/receptionists/{id}")
+    public ShowReceptionistDto findReceptionistById(@PathVariable("id") Long receptionistId) {
+
+        return receptionistService.findReceptionistById(receptionistId);
+    }
+
     @PutMapping("/receptionists/{id}")
     public ShowReceptionistDto updateReceptionist(@PathVariable("id") Long receptionistId,
                                                   @RequestBody UpdateReceptionistDto receptionistRequest) {

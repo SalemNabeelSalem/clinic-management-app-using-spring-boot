@@ -46,6 +46,22 @@ paths:
           description: "OK"
 
   /api/v1/receptionists/{id}:
+    get:
+      tags:
+        - "receptionist"
+      summary: "find receptionist by id."
+      description: "find receptionist by id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the receptionist id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
     put:
       tags:
         - "receptionist"
