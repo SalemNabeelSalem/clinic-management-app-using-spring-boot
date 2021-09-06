@@ -5,7 +5,6 @@ import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
 import com.bit.services.PatientReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,32 +16,38 @@ public class PatientReservationController {
     @Autowired
     private PatientReservationService patientReservationService;
 
-    @GetMapping("/receptionists/{id}/patients-reservations")
-    public List<ShowPatientReservationDto> findAllPatientsReservationsByReceptionistId(@PathVariable("id") Long receptionistId) {
+    @GetMapping("/patients-reservations")
+    public List<ShowPatientReservationDto> findAllPatientsReservations() {
 
-        return patientReservationService.findAllPatientsReservationsByReceptionistId(receptionistId);
+        return patientReservationService.findAllPatientsReservations();
     }
 
-    @PostMapping("/receptionists/{id}/patients-reservations")
-    public ShowPatientReservationDto createNewPatientReservationByReceptionistId(
-            @PathVariable("id") Long receptionistId, @RequestBody CreatePatientReservationDto patientReservationRequest) {
+    @GetMapping("/receptionists/{receptionistId}/patients-reservations")
+    public List<ShowPatientReservationDto> findAllPatientsReservationsOfReceptionist(@PathVariable Long receptionistId) {
 
-        return patientReservationService.createNewPatientReservationByReceptionistId(receptionistId, patientReservationRequest);
+        return patientReservationService.findAllPatientsReservationsOfReceptionist(receptionistId);
     }
 
-    @PutMapping("/patients-reservations/{id}")
+    @PostMapping("/receptionists/{receptionistId}/patients-reservations")
+    public ShowPatientReservationDto createNewPatientReservation(
+            @PathVariable Long receptionistId, @RequestBody CreatePatientReservationDto patientReservationRequest) {
+
+        return patientReservationService.createNewPatientReservation(receptionistId, patientReservationRequest);
+    }
+
+    @GetMapping("/receptionists/{receptionistId}/patients-reservations/{patientReservationId}")
+    public ShowPatientReservationDto findPatientReservationById(@PathVariable Long receptionistId, @PathVariable Long patientReservationId) {
+
+        return patientReservationService.findPatientReservationById(patientReservationId);
+    }
+
+    @PutMapping("/receptionists/{receptionistId}/patients-reservations/{patientReservationId}")
     public ShowPatientReservationDto updatePatientReservation(
-            @PathVariable("id") Long patientReservationId,
+            @PathVariable Long receptionistId, @PathVariable Long patientReservationId,
             @RequestBody UpdatePatientReservationDto patientReservationRequest) {
 
         return patientReservationService.updatePatientReservation(
-                patientReservationId, patientReservationRequest
+            patientReservationId, patientReservationRequest
         );
-    }
-
-    @DeleteMapping("/patients-reservations/{id}")
-    public ResponseEntity deletePatientReservation(@PathVariable("id") Long patientReservationId) {
-
-        return patientReservationService.deletePatientReservation(patientReservationId);
     }
 }

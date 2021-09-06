@@ -10,11 +10,11 @@ public class UpdatePatientReservationDto {
 
     private Gender gender;
 
-    private String email;
+    private Integer age;
 
     private String phone;
 
-    private String feeling;
+    private String email;
 
-    private Long employeeId;
+    private String feeling;
 }

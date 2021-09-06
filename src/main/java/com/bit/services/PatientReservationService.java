@@ -10,7 +10,6 @@ import com.bit.repositories.PatientReservationRepository;
 import com.bit.repositories.ReceptionistRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +27,16 @@ public class PatientReservationService {
     @Autowired
     private ReceptionistRepository receptionistRepository;
 
-    public List<ShowPatientReservationDto> findAllPatientsReservationsByReceptionistId(Long receptionistId) {
+    public List<ShowPatientReservationDto> findAllPatientsReservations() {
+
+        return patientReservationRepository.findAll().stream().sorted(
+            (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
+        ).collect(Collectors.toList()).stream().map(
+            obj -> modelMapper.map(obj, ShowPatientReservationDto.class)
+        ).collect(Collectors.toList());
+    }
+
+    public List<ShowPatientReservationDto> findAllPatientsReservationsOfReceptionist(Long receptionistId) {
 
         Receptionist receptionist = receptionistRepository.findById(receptionistId).orElseThrow(
             () -> new ResourceNotFoundException("receptionist with id: [" + receptionistId + "] is not found.")
@@ -44,15 +52,13 @@ public class PatientReservationService {
         ).collect(Collectors.toList());
     }
 
-    public ShowPatientReservationDto createNewPatientReservationByReceptionistId(
-            Long receptionistId, CreatePatientReservationDto patientReservationInput) {
+    public ShowPatientReservationDto createNewPatientReservation(
+            Long receptionistId, CreatePatientReservationDto patientReservationInput
+    ) {
 
-        if (receptionistRepository.findById(receptionistId).isEmpty()) {
-
-            throw new ResourceNotFoundException("employee with id: [" + receptionistId + "] is not found.");
-        }
-
-        Receptionist receptionist = receptionistRepository.findById(receptionistId).get();
+        Receptionist receptionist = receptionistRepository.findById(receptionistId).orElseThrow(
+            () -> new ResourceNotFoundException("employee with id: [" + receptionistId + "] is not found.")
+        );
 
         PatientReservation patientReservation = new PatientReservation();
 
@@ -65,56 +71,34 @@ public class PatientReservationService {
         patientReservation.setReceptionist(receptionist);
 
         return modelMapper.map(
-                patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
+            patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
         );
     }
 
-    public ShowPatientReservationDto updatePatientReservation(Long patientReservationId,
-                                                              UpdatePatientReservationDto patientReservationRequest) {
+    public ShowPatientReservationDto findPatientReservationById(Long patientReservationId) {
 
-        if (patientReservationRepository.findById(patientReservationId).isEmpty()) {
+        PatientReservation patientReservation = patientReservationRepository.findById(patientReservationId).orElseThrow(
+            () -> new ResourceNotFoundException("patient reservationId with id: [" + patientReservationId + "] is not found.")
+        );
 
-            throw new ResourceNotFoundException(
-                "patient reservationId with id: [" + patientReservationId + "] is not found."
-            );
-        }
+        return modelMapper.map(patientReservation, ShowPatientReservationDto.class);
+    }
 
-        PatientReservation patientReservationData = patientReservationRepository.findById(patientReservationId).get();
+    public ShowPatientReservationDto updatePatientReservation(Long patientReservationId, UpdatePatientReservationDto patientReservationInput) {
 
-        Long employeeId = patientReservationRequest.getEmployeeId();
+        PatientReservation patientReservation = patientReservationRepository.findById(patientReservationId).orElseThrow(
+            () -> new ResourceNotFoundException("patient reservationId with id: [" + patientReservationId + "] is not found.")
+        );
 
-        if (receptionistRepository.findById(employeeId).isEmpty()) {
-
-            throw new ResourceNotFoundException("employee with id: [" + employeeId + "] is not found.");
-        }
-
-        Receptionist receptionistData = receptionistRepository.findById(employeeId).get();
-
-        patientReservationData.setFullName(patientReservationRequest.getFullName());
-        patientReservationData.setGender(patientReservationRequest.getGender());
-        patientReservationData.setEmail(patientReservationRequest.getEmail());
-        patientReservationData.setPhone(patientReservationRequest.getPhone());
-        patientReservationData.setFeeling(patientReservationRequest.getFeeling());
-        patientReservationData.setReceptionist(receptionistData);
+        patientReservation.setFullName(patientReservationInput.getFullName());
+        patientReservation.setGender(patientReservationInput.getGender());
+        patientReservation.setAge(patientReservationInput.getAge());
+        patientReservation.setEmail(patientReservationInput.getEmail());
+        patientReservation.setPhone(patientReservationInput.getPhone());
+        patientReservation.setFeeling(patientReservationInput.getFeeling());
 
         return modelMapper.map(
-            patientReservationRepository.save(patientReservationData), ShowPatientReservationDto.class
+            patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
         );
-    }
-
-    public ResponseEntity deletePatientReservation(Long patientReservationId) {
-
-        if (patientReservationRepository.findById(patientReservationId).isEmpty()) {
-
-            throw new ResourceNotFoundException(
-                "patient reservationId with id: [" + patientReservationId + "] is not found."
-            );
-        }
-
-        PatientReservation patientReservationData = patientReservationRepository.findById(patientReservationId).get();
-
-        patientReservationRepository.save(patientReservationData);
-
-        return ResponseEntity.ok().build();
     }
 }
