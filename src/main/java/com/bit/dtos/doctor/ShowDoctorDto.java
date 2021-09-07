@@ -18,6 +18,8 @@ public class ShowDoctorDto {
 
     private String phone;
 
+    private String email;
+
     private DoctorType type;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")

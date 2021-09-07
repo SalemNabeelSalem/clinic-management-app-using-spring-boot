@@ -29,16 +29,28 @@ public class DoctorController {
         return doctorService.createNewDoctor(doctorRequest);
     }
 
+    @GetMapping("/doctors/{id}")
+    public ShowDoctorDto findDoctorById(@PathVariable("id") Long doctorId) {
+
+        return doctorService.findDoctorById(doctorId);
+    }
+
     @PutMapping("/doctors/{id}")
     public ShowDoctorDto updateDoctor(@PathVariable("id") Long doctorId,
-                                          @RequestBody UpdateDoctorDto doctorRequest) {
+                                      @RequestBody UpdateDoctorDto doctorRequest) {
 
         return doctorService.updateDoctor(doctorId, doctorRequest);
     }
 
-    @DeleteMapping("/doctors/{id}")
-    public ResponseEntity deleteDoctor(@PathVariable("id") Long doctorId) {
+    @DeleteMapping("/doctors/{id}/deactivate")
+    public ResponseEntity deactivateReceptionist(@PathVariable("id") Long doctorId) {
 
-        return doctorService.deleteDoctor(doctorId);
+        return doctorService.deactivateDoctor(doctorId);
+    }
+
+    @PutMapping("/doctors/{id}/activate")
+    public ResponseEntity activateReceptionist(@PathVariable("id") Long doctorId) {
+
+        return doctorService.activateDoctor(doctorId);
     }
 }

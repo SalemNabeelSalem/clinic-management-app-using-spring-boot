@@ -9,9 +9,9 @@ schemes:
 tags:
   - name: "receptionist"
     description: "all about apis of receptionist."
-  - name: "patients-reservations"
+  - name: "patient-reservation"
     description: "all about apis of patients-reservations."
-  - name: "doctors"
+  - name: "doctor"
     description: "all about apis of doctors."
 paths:
   /api/v1/receptionists:
@@ -122,7 +122,7 @@ paths:
   /api/v1/patients-reservations:
     get:
       tags:
-        - "patients-reservations"
+        - "patient-reservation"
       summary: "find all patients reservations."
       description: "find all patients reservations."
       produces:
@@ -134,7 +134,7 @@ paths:
   /api/v1/receptionists/{receptionistId}/patients-reservations:
     get:
       tags:
-        - "patients-reservations"
+        - "patient-reservation"
       summary: "find all patients reservations by receptionist id."
       description: "find all patients reservations by receptionist id."
       produces:
@@ -150,7 +150,7 @@ paths:
           description: "OK"
     post:
       tags:
-        - "patients-reservations"
+        - "patient-reservation"
       summary: "create new patient reservation."
       description: "create new patient reservation."
       consumes:
@@ -176,7 +176,7 @@ paths:
   /api/v1/receptionists/{receptionistId}/patients-reservations/{patientReservationId}:
     get:
       tags:
-        - "patients-reservations"
+        - "patient-reservation"
       summary: "find all patients reservations by id."
       description: "find all patients reservations by id."
       produces:
@@ -197,7 +197,7 @@ paths:
           description: "OK"
     put:
       tags:
-        - "patients-reservations"
+        - "patient-reservation"
       summary: "update patient reservation."
       description: "update patient reservation."
       consumes:
@@ -228,7 +228,7 @@ paths:
   /api/v1/doctors:
     get:
       tags:
-        - "doctors"
+        - "doctor"
       summary: "find all doctors."
       description: "find all doctors."
       produces:
@@ -238,7 +238,7 @@ paths:
           description: "OK"
     post:
       tags:
-        - "doctors"
+        - "doctor"
       summary: "create new doctor."
       description: "create new doctor."
       consumes:
@@ -257,9 +257,25 @@ paths:
           description: "OK"
 
   /api/v1/doctors/{id}:
+    get:
+      tags:
+        - "doctor"
+      summary: "find doctor by id."
+      description: "find doctor by id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
     put:
       tags:
-        - "doctors"
+        - "doctor"
       summary: "update doctor."
       description: "update doctor."
       consumes:
@@ -281,11 +297,29 @@ paths:
       responses:
         200:
           description: "OK"
+
+  /api/v1/doctors/{id}/deactivate:
     delete:
       tags:
-        - "doctors"
-      summary: "delete doctor."
-      description: "delete doctor."
+        - "doctor"
+      summary: "deactivate doctor."
+      description: "deactivate doctor."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/doctors/{id}/activate:
+    put:
+      tags:
+        - "doctor"
+      summary: "activate doctor."
+      description: "activate doctor."
       parameters:
         - in: "path"
           name: "id"
@@ -339,6 +373,30 @@ definitions:
         type: "string"
         example: "test@email.com"
 
+  CreatePatientReservationDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "anwar ahmed ali"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      age:
+        type: integer
+        example: 20
+      email:
+        type: "string"
+        example: "test@email.com"
+      phone:
+        type: "string"
+        example: "777666555"
+      feeling:
+        type: "string"
+        example: "she is very sick."
+
   UpdatePatientReservationDto:
     type: "object"
     properties:
@@ -368,7 +426,7 @@ definitions:
     properties:
       fullName:
         type: "string"
-        example: "DR. Amal Ali Salem"
+        example: "Amal Ali Salem"
       gender:
         type: "string"
         enum:
@@ -377,10 +435,15 @@ definitions:
       phone:
         type: "string"
         example: "777666555"
+      email:
+        type: "string"
+        example: "test@email.com"
       type:
         type: "string"
         enum:
           - "GENERAL"
+          - "PEDIATRICIAN"
+          - "CARDIOLOGIST"
       userName:
         type: "string"
         example: "amal"
@@ -393,7 +456,7 @@ definitions:
     properties:
       fullName:
         type: "string"
-        example: "DR. Amal Ali Salem"
+        example: "Amal Ali Salem"
       gender:
         type: "string"
         enum:
@@ -402,37 +465,12 @@ definitions:
       phone:
         type: "string"
         example: "777666555"
+      email:
+        type: "string"
+        example: "test@email.com"
       type:
         type: "string"
         enum:
           - "GENERAL"
-      userName:
-        type: "string"
-        example: "amal"
-      password:
-        type: "string"
-        example: "12345"
-
-  CreatePatientReservationDto:
-    type: "object"
-    properties:
-      fullName:
-        type: "string"
-        example: "anwar ahmed ali"
-      gender:
-        type: "string"
-        enum:
-          - "FEMALE"
-          - "MALE"
-      age:
-        type: integer
-        example: 20
-      email:
-        type: "string"
-        example: "test@email.com"
-      phone:
-        type: "string"
-        example: "777666555"
-      feeling:
-        type: "string"
-        example: "she is very sick."
+          - "PEDIATRICIAN"
+          - "CARDIOLOGIST"

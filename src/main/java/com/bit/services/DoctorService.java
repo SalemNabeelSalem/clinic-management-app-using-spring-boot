@@ -34,63 +34,80 @@ public class DoctorService {
         ).collect(Collectors.toList());
     }
 
-    public ShowDoctorDto createNewDoctor(CreateDoctorDto doctorRequest) {
+    public ShowDoctorDto createNewDoctor(CreateDoctorDto doctorInput) {
 
-        Doctor doctorData = new Doctor();
+        Doctor doctor = new Doctor();
 
-        doctorData.setFullName(doctorRequest.getFullName());
+        doctor.setFullName(doctorInput.getFullName());
 
-        doctorData.setGender(doctorRequest.getGender());
+        doctor.setGender(doctorInput.getGender());
 
-        doctorData.setPhone(doctorRequest.getPhone());
+        doctor.setPhone(doctorInput.getPhone());
 
-        doctorData.setType(doctorRequest.getType());
+        doctor.setEmail(doctorInput.getEmail());
 
-        doctorData.setUserName(doctorRequest.getUserName());
+        doctor.setType(doctorInput.getType());
 
-        doctorData.setPassword(doctorRequest.getPassword());
+        doctor.setUserName(doctorInput.getUserName());
+
+        doctor.setPassword(doctorInput.getPassword());
+
+        doctor.setIsActive(true);
 
         return modelMapper.map(
-            doctorRepository.save(doctorData), ShowDoctorDto.class
+            doctorRepository.save(doctor), ShowDoctorDto.class
         );
     }
 
-    public ShowDoctorDto updateDoctor(Long doctorId, UpdateDoctorDto doctorRequest) {
+    public ShowDoctorDto findDoctorById(Long doctorId) {
+        return modelMapper.map(doctorRepository.findById(doctorId).orElseThrow(
+            () -> new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.")
+        ), ShowDoctorDto.class);
+    }
 
-        if (doctorRepository.findById(doctorId).isEmpty()) {
+    public ShowDoctorDto updateDoctor(Long doctorId, UpdateDoctorDto doctorInput) {
 
-            throw new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.");
-        }
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(
+            () -> new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.")
+        );
 
-        Doctor doctorData = doctorRepository.findById(doctorId).get();
+        doctor.setFullName(doctorInput.getFullName());
 
-        doctorData.setFullName(doctorRequest.getFullName());
+        doctor.setGender(doctorInput.getGender());
 
-        doctorData.setGender(doctorRequest.getGender());
+        doctor.setPhone(doctorInput.getPhone());
 
-        doctorData.setPhone(doctorRequest.getPhone());
+        doctor.setEmail(doctorInput.getEmail());
 
-        doctorData.setType(doctorRequest.getType());
-
-        doctorData.setUserName(doctorRequest.getUserName());
-
-        doctorData.setPassword(doctorRequest.getPassword());
+        doctor.setType(doctorInput.getType());
 
         return modelMapper.map(
-            doctorRepository.save(doctorData), ShowDoctorDto.class
+            doctorRepository.save(doctor), ShowDoctorDto.class
         );
     }
 
-    public ResponseEntity deleteDoctor(Long doctorId) {
+    public ResponseEntity deactivateDoctor(Long doctorId) {
 
-        if (doctorRepository.findById(doctorId).isEmpty()) {
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(
+            () -> new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.")
+        );
 
-            throw new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.");
-        }
+        doctor.setIsActive(false);
 
-        Doctor doctorData = doctorRepository.findById(doctorId).get();
+        doctorRepository.save(doctor);
 
-        doctorRepository.delete(doctorData);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity activateDoctor(Long doctorId) {
+
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(
+            () -> new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.")
+        );
+
+        doctor.setIsActive(true);
+
+        doctorRepository.save(doctor);
 
         return ResponseEntity.ok().build();
     }

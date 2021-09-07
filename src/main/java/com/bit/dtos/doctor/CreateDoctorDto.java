@@ -13,6 +13,8 @@ public class CreateDoctorDto {
 
     private String phone;
 
+    private String email;
+
     private DoctorType type;
 
     private String userName;

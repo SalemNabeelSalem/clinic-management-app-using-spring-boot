@@ -13,9 +13,7 @@ public class UpdateDoctorDto {
 
     private String phone;
 
+    private String email;
+
     private DoctorType type;
-
-    private String userName;
-
-    private String password;
 }

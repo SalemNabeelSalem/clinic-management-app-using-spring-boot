@@ -24,6 +24,8 @@ public class Doctor extends AuditModel {
 
     private String phone;
 
+    private String email;
+
     @Enumerated(EnumType.STRING)
     private DoctorType type;
 
@@ -31,4 +33,7 @@ public class Doctor extends AuditModel {
     private String userName;
 
     private String password;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
