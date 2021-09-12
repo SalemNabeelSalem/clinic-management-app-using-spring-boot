@@ -13,6 +13,8 @@ tags:
     description: "all about apis of patients-reservations."
   - name: "doctor"
     description: "all about apis of doctors."
+  - name: "notifications"
+    description: "all about apis of notifications."
 paths:
   /api/v1/receptionists:
     get:
@@ -330,6 +332,27 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/notifications/send-email:
+    post:
+      tags:
+        - "notifications"
+      summary: "send email message"
+      description: "send email message"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "emailMessageContentInput"
+          description: "email message content data"
+          required: true
+          schema:
+            $ref: "#/definitions/EmailMessageContent"
+      responses:
+        200:
+          description: "OK"
+
 definitions:
   CreateReceptionistDto:
     type: "object"
@@ -474,3 +497,16 @@ definitions:
           - "GENERAL"
           - "PEDIATRICIAN"
           - "CARDIOLOGIST"
+
+  EmailMessageContent:
+    type: "object"
+    properties:
+      emailAddress:
+        type: "string"
+        example: "test@gmail.com"
+      senderName:
+        type: "string"
+        example: "test user"
+      messageContent:
+        type: "string"
+        example: "test send email message"

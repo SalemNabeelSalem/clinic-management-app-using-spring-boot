@@ -46,8 +46,9 @@ public class EmailService {
         }
     }
 
-    public String buildEmail(String name) {
+    public String buildEmail(String name, String message) {
 
-        return "<h1 style='text-align:center'>" + name + "</h1>";
+        return "<h1 style='text-align:center'>Hello Mr: " + name + "</h1>" +
+                "<p style='text-align:center'>" + message + "</p>";
     }
 }

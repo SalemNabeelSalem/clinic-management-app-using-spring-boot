@@ -27,4 +27,6 @@ public class ShowDoctorDto {
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
+
+    private Boolean isActive;
 }
