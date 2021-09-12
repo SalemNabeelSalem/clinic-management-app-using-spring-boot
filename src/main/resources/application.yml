@@ -16,7 +16,8 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   mail:
     host: localhost
-    port: 25
+    port: 1025 # HogMail SMTP Server.
+    #port: 25 # MailDev SMTP Server.
     username: test
     password: test
     properties:

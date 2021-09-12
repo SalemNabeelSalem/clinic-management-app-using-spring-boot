@@ -34,7 +34,7 @@ public class EmailService {
 
             helper.setSubject("Your Appointment With Doctor.");
 
-            helper.setFrom("hello@salem.com");
+            helper.setFrom("b5it-final-project@gmail.com");
 
             mailSender.send(mimeMessage);
 
@@ -48,7 +48,7 @@ public class EmailService {
 
     public String buildEmail(String name, String message) {
 
-        return "<h1 style='text-align:center'>Hello Mr: " + name + "</h1>" +
+        return "<h1 style='text-align:center'>From Mr: " + name + "</h1>" +
                 "<p style='text-align:center'>" + message + "</p>";
     }
 }
