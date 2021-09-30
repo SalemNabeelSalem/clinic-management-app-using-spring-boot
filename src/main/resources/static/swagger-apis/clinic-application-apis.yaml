@@ -13,6 +13,8 @@ tags:
     description: "all about apis of patients-reservations."
   - name: "doctor"
     description: "all about apis of doctors."
+  - name: "laboratory"
+    description: "all about apis of laboratories."
   - name: "notifications"
     description: "all about apis of notifications."
 paths:
@@ -332,6 +334,111 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/laboratories:
+    get:
+      tags:
+        - "laboratory"
+      summary: "find all laboratories."
+      description: "find all laboratories."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+    post:
+      tags:
+        - "laboratory"
+      summary: "create new laboratory."
+      description: "create new laboratory."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "laboratoryRequest"
+          description: "laboratory data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateLaboratoryDto"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/laboratories/{id}:
+    get:
+      tags:
+        - "laboratory"
+      summary: "find laboratory by id."
+      description: "find laboratory by id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the laboratory id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+    put:
+      tags:
+        - "laboratory"
+      summary: "update laboratory."
+      description: "update laboratory."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the laboratory id."
+          required: true
+          type: "string"
+        - in: "body"
+          name: "laboratoryRequest"
+          description: "laboratory data"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateLaboratoryDto"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/laboratories/{id}/deactivate:
+    delete:
+      tags:
+        - "laboratory"
+      summary: "deactivate laboratory."
+      description: "deactivate laboratory."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the laboratory id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/laboratories/{id}/activate:
+    put:
+      tags:
+        - "laboratory"
+      summary: "activate laboratory."
+      description: "activate laboratory."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the laboratory id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/notifications/send-email:
     post:
       tags:
@@ -497,6 +604,48 @@ definitions:
           - "GENERAL"
           - "PEDIATRICIAN"
           - "CARDIOLOGIST"
+
+  CreateLaboratoryDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "Samia Yasser Ahmed"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      email:
+        type: "string"
+        example: "test@email.com"
+      userName:
+        type: "string"
+        example: "samia"
+      password:
+        type: "string"
+        example: "12345"
+
+  UpdateLaboratoryDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "Samia Yasser Ahmed"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      email:
+        type: "string"
+        example: "test@email.com"
 
   EmailMessageContent:
     type: "object"
