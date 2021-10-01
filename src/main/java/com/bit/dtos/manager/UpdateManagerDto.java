@@ -1,10 +1,10 @@
-package com.bit.dtos.laboratory;
+package com.bit.dtos.manager;
 
 import com.bit.enums.Gender;
 import lombok.Data;
 
 @Data
-public class UpdateLaboratoryDto {
+public class UpdateManagerDto {
 
     private String fullName;
 

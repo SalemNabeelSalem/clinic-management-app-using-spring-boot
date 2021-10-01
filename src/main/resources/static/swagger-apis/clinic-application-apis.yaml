@@ -15,6 +15,8 @@ tags:
     description: "all about apis of doctors."
   - name: "laboratory"
     description: "all about apis of laboratories."
+  - name: "manager"
+    description: "all about apis of managers."
   - name: "notifications"
     description: "all about apis of notifications."
 paths:
@@ -439,6 +441,111 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/managers:
+    get:
+      tags:
+        - "manager"
+      summary: "find all managers."
+      description: "find all managers."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+    post:
+      tags:
+        - "manager"
+      summary: "create new manager."
+      description: "create new manager."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "managerRequest"
+          description: "manager data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateManagerDto"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/managers/{id}:
+    get:
+      tags:
+        - "manager"
+      summary: "find manager by id."
+      description: "find manager by id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the manager id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+    put:
+      tags:
+        - "manager"
+      summary: "update manager."
+      description: "update manager."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the manager id."
+          required: true
+          type: "string"
+        - in: "body"
+          name: "managerRequest"
+          description: "manager data"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateManagerDto"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/managers/{id}/deactivate:
+    delete:
+      tags:
+        - "manager"
+      summary: "deactivate manager."
+      description: "deactivate manager."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the manager id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/managers/{id}/activate:
+    put:
+      tags:
+        - "manager"
+      summary: "activate manager."
+      description: "activate manager."
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the manager id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/notifications/send-email:
     post:
       tags:
@@ -466,7 +573,7 @@ definitions:
     properties:
       fullName:
         type: "string"
-        example: "Sahar Omar Ali"
+        example: "Rufida Nabeel Salem"
       gender:
         type: "string"
         enum:
@@ -477,10 +584,10 @@ definitions:
         example: "777666555"
       email:
         type: "string"
-        example: "test@email.com"
+        example: "rufida@email.com"
       userName:
         type: "string"
-        example: "sahar"
+        example: "rufida"
       password:
         type: "string"
         example: "12345"
@@ -508,7 +615,7 @@ definitions:
     properties:
       fullName:
         type: "string"
-        example: "anwar ahmed ali"
+        example: "Sahar Omar Ali"
       gender:
         type: "string"
         enum:
@@ -519,7 +626,7 @@ definitions:
         example: 20
       email:
         type: "string"
-        example: "test@email.com"
+        example: "sahar@email.com"
       phone:
         type: "string"
         example: "777666555"
@@ -546,7 +653,7 @@ definitions:
         example: "777666555"
       email:
         type: "string"
-        example: "test@email.com"
+        example: "sahar@email.com"
       feeling:
         type: "string"
         example: "she is very sick."
@@ -567,7 +674,7 @@ definitions:
         example: "777666555"
       email:
         type: "string"
-        example: "test@email.com"
+        example: "amal@email.com"
       type:
         type: "string"
         enum:
@@ -597,7 +704,7 @@ definitions:
         example: "777666555"
       email:
         type: "string"
-        example: "test@email.com"
+        example: "amal@email.com"
       type:
         type: "string"
         enum:
@@ -621,7 +728,7 @@ definitions:
         example: "777666555"
       email:
         type: "string"
-        example: "test@email.com"
+        example: "samia@email.com"
       userName:
         type: "string"
         example: "samia"
@@ -645,17 +752,59 @@ definitions:
         example: "777666555"
       email:
         type: "string"
-        example: "test@email.com"
+        example: "samia@email.com"
+
+  CreateManagerDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "Donia Ahmed Mohammed"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      email:
+        type: "string"
+        example: "Donia@email.com"
+      userName:
+        type: "string"
+        example: "Donia"
+      password:
+        type: "string"
+        example: "12345"
+
+  UpdateManagerDto:
+    type: "object"
+    properties:
+      fullName:
+        type: "string"
+        example: "Donia Ahmed Mohammed"
+      gender:
+        type: "string"
+        enum:
+          - "FEMALE"
+          - "MALE"
+      phone:
+        type: "string"
+        example: "777666555"
+      email:
+        type: "string"
+        example: "donia@email.com"
 
   EmailMessageContent:
     type: "object"
     properties:
       emailAddress:
         type: "string"
-        example: "test@gmail.com"
+        example: "user@gmail.com"
       senderName:
         type: "string"
         example: "test user"
       messageContent:
         type: "string"
-        example: "test send email message"
+        example: "send test user email message"

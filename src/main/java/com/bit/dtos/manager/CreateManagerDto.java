@@ -1,10 +1,10 @@
-package com.bit.dtos.laboratory;
+package com.bit.dtos.manager;
 
 import com.bit.enums.Gender;
 import lombok.Data;
 
 @Data
-public class UpdateLaboratoryDto {
+public class CreateManagerDto {
 
     private String fullName;
 
@@ -13,4 +13,8 @@ public class UpdateLaboratoryDto {
     private String phone;
 
     private String email;
+
+    private String userName;
+
+    private String password;
 }
