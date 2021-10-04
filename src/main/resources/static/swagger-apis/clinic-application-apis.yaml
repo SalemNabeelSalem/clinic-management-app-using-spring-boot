@@ -19,6 +19,8 @@ tags:
     description: "all about apis of managers."
   - name: "notifications"
     description: "all about apis of notifications."
+  - name: "reports"
+    description: "all about apis of reports."
 paths:
   /api/v1/receptionists:
     get:
@@ -563,6 +565,18 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/EmailMessageContent"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/reports/users-chart-data:
+    get:
+      tags:
+        - "reports"
+      summary: "users-chart-data report."
+      description: "users-chart-data report."
+      produces:
+        - "application/json"
       responses:
         200:
           description: "OK"

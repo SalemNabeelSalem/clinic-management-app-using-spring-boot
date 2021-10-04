@@ -29,5 +29,5 @@ public class ShowPatientReservationDto {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
 
-    private String receptionistFullName;
+    // private String receptionistFullName;
 }
