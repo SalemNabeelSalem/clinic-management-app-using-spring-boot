@@ -20,4 +20,10 @@ public class ReportsController {
 
         return new ResponseEntity<>(reportsService.getUsersChartData(), HttpStatus.OK);
     }
+
+    @GetMapping("/patients-reservations-chart-data")
+    public ResponseEntity getPatientsReservationsChartData() {
+
+        return new ResponseEntity<>(reportsService.getPatientsReservationsChartData(), HttpStatus.OK);
+    }
 }

@@ -581,6 +581,18 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/reports/patients-reservations-chart-data:
+    get:
+      tags:
+        - "reports"
+      summary: "patients-reservations-chart-data report."
+      description: "patients-reservations-chart-data report."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+
 definitions:
   CreateReceptionistDto:
     type: "object"
