@@ -15,6 +15,8 @@ public interface PatientReservationRepository extends JpaRepository<PatientReser
 
     List<PatientReservation> findAllByReceptionist(Receptionist receptionist);
 
+    List<PatientReservation> findAllByDoctorId(Long doctorId);
+
     @Query(value = "SELECT (SELECT COUNT(*) FROM patients_reservations) AS Total,\n" +
         "(SELECT COUNT(*) FROM patients_reservations WHERE gender = 'MALE') AS Male,\n" +
         "(SELECT COUNT(*) FROM patients_reservations WHERE gender = 'Female') AS Female", nativeQuery = true)

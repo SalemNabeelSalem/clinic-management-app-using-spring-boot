@@ -4,9 +4,12 @@ import com.bit.dtos.doctor.CreateDoctorDto;
 import com.bit.dtos.doctor.DoctorsListDto;
 import com.bit.dtos.doctor.ShowDoctorDto;
 import com.bit.dtos.doctor.UpdateDoctorDto;
+import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.entities.Doctor;
+import com.bit.entities.PatientReservation;
 import com.bit.exceptions.ResourceNotFoundException;
 import com.bit.repositories.DoctorRepository;
+import com.bit.repositories.PatientReservationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,9 @@ public class DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private PatientReservationRepository patientReservationRepository;
 
     public List<ShowDoctorDto> findAllDoctors() {
 
@@ -125,6 +131,22 @@ public class DoctorService {
                 doctorsListDto.setSummary(obj.getFullName().concat(" - " + obj.getType()));
                 return doctorsListDto;
             }
+        ).collect(Collectors.toList());
+    }
+
+    public List<ShowPatientReservationDto> findAllPatientsReservationsOfDoctor(Long id) {
+
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException("doctor with id: [" + id + "] is not found.")
+        );
+
+        List<PatientReservation> sortedPatientsReservationsList =
+            patientReservationRepository.findAllByDoctorId(doctor.getId()).stream().sorted(
+                (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
+            ).collect(Collectors.toList());
+
+        return sortedPatientsReservationsList.stream().map(
+            obj -> modelMapper.map(obj, ShowPatientReservationDto.class)
         ).collect(Collectors.toList());
     }
 }

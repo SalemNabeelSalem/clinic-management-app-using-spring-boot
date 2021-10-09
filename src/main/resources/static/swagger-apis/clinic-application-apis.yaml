@@ -350,6 +350,24 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/doctors/{id}/patients-reservations:
+    get:
+      tags:
+        - "doctor"
+      summary: "find all patients reservations by doctor id."
+      description: "find all patients reservations by doctor id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/laboratories:
     get:
       tags:

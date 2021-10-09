@@ -4,6 +4,7 @@ import com.bit.dtos.doctor.CreateDoctorDto;
 import com.bit.dtos.doctor.DoctorsListDto;
 import com.bit.dtos.doctor.ShowDoctorDto;
 import com.bit.dtos.doctor.UpdateDoctorDto;
+import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +60,11 @@ public class DoctorController {
     public List<DoctorsListDto> findAllDoctorsList() {
 
         return doctorService.findAllDoctorsList();
+    }
+
+    @GetMapping("/doctors/{id}/patients-reservations")
+    public List<ShowPatientReservationDto> findAllPatientsReservationsOfDoctor(@PathVariable Long id) {
+
+        return doctorService.findAllPatientsReservationsOfDoctor(id);
     }
 }
