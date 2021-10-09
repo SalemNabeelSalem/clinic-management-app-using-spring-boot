@@ -1,6 +1,7 @@
 package com.bit.services;
 
 import com.bit.dtos.doctor.CreateDoctorDto;
+import com.bit.dtos.doctor.DoctorsListDto;
 import com.bit.dtos.doctor.ShowDoctorDto;
 import com.bit.dtos.doctor.UpdateDoctorDto;
 import com.bit.entities.Doctor;
@@ -25,11 +26,11 @@ public class DoctorService {
 
     public List<ShowDoctorDto> findAllDoctors() {
 
-        List<Doctor> sortedEmployeesList = doctorRepository.findAll().stream().sorted(
+        List<Doctor> sortedDoctorsList = doctorRepository.findAll().stream().sorted(
             (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
         ).collect(Collectors.toList());
 
-        return sortedEmployeesList.stream().map(
+        return sortedDoctorsList.stream().map(
             obj -> modelMapper.map(obj, ShowDoctorDto.class)
         ).collect(Collectors.toList());
     }
@@ -110,5 +111,20 @@ public class DoctorService {
         doctorRepository.save(doctor);
 
         return ResponseEntity.ok().build();
+    }
+
+    public List<DoctorsListDto> findAllDoctorsList() {
+        List<Doctor> sortedDoctorsList = doctorRepository.findAll().stream().sorted(
+            (o1, o2)->o2.getCreatedAt().compareTo(o1.getCreatedAt())
+        ).collect(Collectors.toList());
+
+        return sortedDoctorsList.stream().map(
+            obj -> {
+                DoctorsListDto doctorsListDto = new DoctorsListDto();
+                doctorsListDto.setId(obj.getId());
+                doctorsListDto.setSummary(obj.getFullName().concat(" - " + obj.getType()));
+                return doctorsListDto;
+            }
+        ).collect(Collectors.toList());
     }
 }

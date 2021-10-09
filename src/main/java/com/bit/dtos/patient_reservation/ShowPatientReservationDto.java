@@ -30,4 +30,6 @@ public class ShowPatientReservationDto {
     private Date updatedAt;
 
     // private String receptionistFullName;
+
+    private Integer doctorId;
 }

@@ -1,6 +1,7 @@
 package com.bit.controllers;
 
 import com.bit.dtos.doctor.CreateDoctorDto;
+import com.bit.dtos.doctor.DoctorsListDto;
 import com.bit.dtos.doctor.ShowDoctorDto;
 import com.bit.dtos.doctor.UpdateDoctorDto;
 import com.bit.services.DoctorService;
@@ -52,5 +53,11 @@ public class DoctorController {
     public ResponseEntity activateReceptionist(@PathVariable("id") Long doctorId) {
 
         return doctorService.activateDoctor(doctorId);
+    }
+
+    @GetMapping("/doctors-list")
+    public List<DoctorsListDto> findAllDoctorsList() {
+
+        return doctorService.findAllDoctorsList();
     }
 }

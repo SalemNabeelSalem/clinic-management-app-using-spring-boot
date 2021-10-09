@@ -338,6 +338,18 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/doctors-list:
+    get:
+      tags:
+        - "doctor"
+      summary: "find all doctors list."
+      description: "find all doctors list."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/laboratories:
     get:
       tags:
@@ -659,6 +671,9 @@ definitions:
       feeling:
         type: "string"
         example: "she is very sick."
+      doctorId:
+        type: integer
+        example: 1
 
   UpdatePatientReservationDto:
     type: "object"
@@ -683,6 +698,9 @@ definitions:
       feeling:
         type: "string"
         example: "she is very sick."
+      doctorId:
+        type: integer
+        example: 1
 
   CreateDoctorDto:
     type: "object"

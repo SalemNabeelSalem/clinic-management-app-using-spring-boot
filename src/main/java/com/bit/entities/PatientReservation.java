@@ -38,4 +38,7 @@ public class PatientReservation extends AuditModel {
     @JoinColumn(name = "receptionist_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Receptionist receptionist;
+
+    @Column(name = "doctor_id")
+    private Long doctorId;
 }

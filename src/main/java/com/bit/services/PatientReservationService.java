@@ -69,6 +69,7 @@ public class PatientReservationService {
         patientReservation.setPhone(patientReservationInput.getPhone());
         patientReservation.setFeeling(patientReservationInput.getFeeling());
         patientReservation.setReceptionist(receptionist);
+        patientReservation.setDoctorId(patientReservationInput.getDoctorId());
 
         return modelMapper.map(
             patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
@@ -96,6 +97,7 @@ public class PatientReservationService {
         patientReservation.setEmail(patientReservationInput.getEmail());
         patientReservation.setPhone(patientReservationInput.getPhone());
         patientReservation.setFeeling(patientReservationInput.getFeeling());
+        patientReservation.setDoctorId(patientReservationInput.getDoctorId());
 
         return modelMapper.map(
             patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
