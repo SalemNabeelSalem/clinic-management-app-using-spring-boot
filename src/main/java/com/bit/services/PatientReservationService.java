@@ -1,5 +1,6 @@
 package com.bit.services;
 
+import com.bit.dtos.patient_check.ShowPatientCheckDto;
 import com.bit.dtos.patient_reservation.CreatePatientReservationDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
@@ -26,6 +27,9 @@ public class PatientReservationService {
 
     @Autowired
     private ReceptionistRepository receptionistRepository;
+
+    @Autowired
+    private PatientCheckService patientCheckService;
 
     public List<ShowPatientReservationDto> findAllPatientsReservations() {
 
@@ -102,5 +106,10 @@ public class PatientReservationService {
         return modelMapper.map(
             patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
         );
+    }
+
+    public ShowPatientCheckDto findPatientCheckByReservationId(Long reservationId) {
+
+        return patientCheckService.findPatientCheckByReservationId(reservationId);
     }
 }
