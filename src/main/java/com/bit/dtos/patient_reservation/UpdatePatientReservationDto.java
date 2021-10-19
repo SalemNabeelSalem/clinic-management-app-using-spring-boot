@@ -17,4 +17,6 @@ public class UpdatePatientReservationDto {
     private String email;
 
     private String feeling;
+
+    private Long doctorId;
 }

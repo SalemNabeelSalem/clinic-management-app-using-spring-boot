@@ -17,4 +17,6 @@ public class CreatePatientReservationDto {
     private String phone;
 
     private String feeling;
+
+    private Long doctorId;
 }

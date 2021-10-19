@@ -1,5 +1,6 @@
 package com.bit.services;
 
+import com.bit.dtos.patient_check.ShowPatientCheckDto;
 import com.bit.dtos.patient_reservation.CreatePatientReservationDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
@@ -26,6 +27,9 @@ public class PatientReservationService {
 
     @Autowired
     private ReceptionistRepository receptionistRepository;
+
+    @Autowired
+    private PatientCheckService patientCheckService;
 
     public List<ShowPatientReservationDto> findAllPatientsReservations() {
 
@@ -69,6 +73,7 @@ public class PatientReservationService {
         patientReservation.setPhone(patientReservationInput.getPhone());
         patientReservation.setFeeling(patientReservationInput.getFeeling());
         patientReservation.setReceptionist(receptionist);
+        patientReservation.setDoctorId(patientReservationInput.getDoctorId());
 
         return modelMapper.map(
             patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
@@ -96,9 +101,15 @@ public class PatientReservationService {
         patientReservation.setEmail(patientReservationInput.getEmail());
         patientReservation.setPhone(patientReservationInput.getPhone());
         patientReservation.setFeeling(patientReservationInput.getFeeling());
+        patientReservation.setDoctorId(patientReservationInput.getDoctorId());
 
         return modelMapper.map(
             patientReservationRepository.save(patientReservation), ShowPatientReservationDto.class
         );
+    }
+
+    public ShowPatientCheckDto findPatientCheckByReservationId(Long reservationId) {
+
+        return patientCheckService.findPatientCheckByReservationId(reservationId);
     }
 }

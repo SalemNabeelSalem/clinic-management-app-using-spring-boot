@@ -1,5 +1,6 @@
 package com.bit.controllers;
 
+import com.bit.dtos.patient_check.ShowPatientCheckDto;
 import com.bit.dtos.patient_reservation.CreatePatientReservationDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
 import com.bit.dtos.patient_reservation.UpdatePatientReservationDto;
@@ -49,5 +50,11 @@ public class PatientReservationController {
         return patientReservationService.updatePatientReservation(
             patientReservationId, patientReservationRequest
         );
+    }
+
+    @GetMapping("/patients-reservations/{reservationId}/patients-checks")
+    public ShowPatientCheckDto findPatientCheckByReservationId(@PathVariable Long reservationId) {
+
+        return patientReservationService.findPatientCheckByReservationId(reservationId);
     }
 }

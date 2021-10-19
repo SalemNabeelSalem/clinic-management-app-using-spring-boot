@@ -3,7 +3,7 @@ info:
   version: "1.0.0"
   title: "B5IT Final Project Clinic Application APIs"
   description: "B5IT Final Project Clinic Application APIs."
-host: "127.0.0.1:9409"
+host: "127.0.0.1:9094"
 schemes:
   - "http"
 tags:
@@ -233,6 +233,24 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/patients-reservations/{reservationId}/patients-checks:
+    get:
+      tags:
+        - "patient-reservation"
+      summary: "find patient check by reservation id."
+      description: "find patient check by reservation id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "reservationId"
+          description: "the reservation id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/doctors:
     get:
       tags:
@@ -334,6 +352,57 @@ paths:
           description: "the doctor id."
           required: true
           type: "string"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/doctors-list:
+    get:
+      tags:
+        - "doctor"
+      summary: "find all doctors list."
+      description: "find all doctors list."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/doctors/{id}/patients-reservations:
+    get:
+      tags:
+        - "doctor"
+      summary: "find all patients reservations by doctor id."
+      description: "find all patients reservations by doctor id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/patients-checks:
+    post:
+      tags:
+        - "doctor"
+      summary: "create new patient check."
+      description: "create new patient check."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "patientCheckRequest"
+          description: "patient check data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreatePatientCheckDto"
       responses:
         200:
           description: "OK"
@@ -659,6 +728,9 @@ definitions:
       feeling:
         type: "string"
         example: "she is very sick."
+      doctorId:
+        type: integer
+        example: 1
 
   UpdatePatientReservationDto:
     type: "object"
@@ -683,6 +755,9 @@ definitions:
       feeling:
         type: "string"
         example: "she is very sick."
+      doctorId:
+        type: integer
+        example: 1
 
   CreateDoctorDto:
     type: "object"
@@ -713,6 +788,28 @@ definitions:
       password:
         type: "string"
         example: "12345"
+
+  CreatePatientCheckDto:
+    type: "object"
+    properties:
+      check:
+        type: "string"
+        example: "test the check"
+      prescription:
+        type: "string"
+        example: "prescription the check"
+      remarks:
+        type: "string"
+        example: "remarks the check"
+      date:
+        type: "string"
+        example: "2021-10-19"
+      doctorId:
+        type: "integer"
+        example: "1"
+      reservationId:
+        type: "integer"
+        example: "1"
 
   UpdateDoctorDto:
     type: "object"

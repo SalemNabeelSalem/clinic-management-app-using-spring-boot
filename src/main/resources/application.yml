@@ -1,5 +1,5 @@
 server:
-  port: 9409 # server publishing port number.
+  port: 9094 # server publishing port number.
 
 spring:
   application:
