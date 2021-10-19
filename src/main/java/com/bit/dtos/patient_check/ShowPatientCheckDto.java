@@ -1,7 +1,10 @@
 package com.bit.dtos.patient_check;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,6 +17,9 @@ public class ShowPatientCheckDto {
     private String prescription;
 
     private String remarks;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
     private Long doctorId;
 

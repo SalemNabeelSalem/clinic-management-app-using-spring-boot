@@ -1,5 +1,6 @@
 package com.bit.services;
 
+import com.bit.dtos.patient_check.CreatePatientCheckDto;
 import com.bit.dtos.patient_check.ShowPatientCheckDto;
 import com.bit.entities.PatientCheck;
 import com.bit.repositories.PatientCheckRepository;
@@ -23,5 +24,24 @@ public class PatientCheckService {
         );
 
         return modelMapper.map(patientCheck, ShowPatientCheckDto.class);
+    }
+
+    public ShowPatientCheckDto createNewPatientCheck(CreatePatientCheckDto patientCheckInput) {
+
+        PatientCheck patientCheck = new PatientCheck();
+
+        patientCheck.setChecking(patientCheckInput.getCheck());
+
+        patientCheck.setPrescription(patientCheckInput.getPrescription());
+
+        patientCheck.setRemarks(patientCheckInput.getRemarks());
+
+        patientCheck.setDate(patientCheckInput.getDate());
+
+        patientCheck.setDoctorId(patientCheckInput.getDoctorId());
+
+        patientCheck.setReservationId(patientCheckInput.getReservationId());
+
+        return modelMapper.map(patientCheckRepository.save(patientCheck), ShowPatientCheckDto.class);
     }
 }

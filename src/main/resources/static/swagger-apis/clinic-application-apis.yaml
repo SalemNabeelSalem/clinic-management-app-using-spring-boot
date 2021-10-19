@@ -386,6 +386,27 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/patients-checks:
+    post:
+      tags:
+        - "doctor"
+      summary: "create new patient check."
+      description: "create new patient check."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "patientCheckRequest"
+          description: "patient check data"
+          required: true
+          schema:
+            $ref: "#/definitions/CreatePatientCheckDto"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/laboratories:
     get:
       tags:
@@ -767,6 +788,28 @@ definitions:
       password:
         type: "string"
         example: "12345"
+
+  CreatePatientCheckDto:
+    type: "object"
+    properties:
+      check:
+        type: "string"
+        example: "test the check"
+      prescription:
+        type: "string"
+        example: "prescription the check"
+      remarks:
+        type: "string"
+        example: "remarks the check"
+      date:
+        type: "string"
+        example: "2021-10-19"
+      doctorId:
+        type: "integer"
+        example: "1"
+      reservationId:
+        type: "integer"
+        example: "1"
 
   UpdateDoctorDto:
     type: "object"
