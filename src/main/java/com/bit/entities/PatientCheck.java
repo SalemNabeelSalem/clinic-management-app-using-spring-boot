@@ -21,6 +21,8 @@ public class PatientCheck extends AuditModel {
 
     private String remarks;
 
+    private String dignostic;
+
     private LocalDate date;
 
     @Column(name = "doctor_id")

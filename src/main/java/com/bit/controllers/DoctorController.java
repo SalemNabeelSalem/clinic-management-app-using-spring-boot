@@ -4,10 +4,12 @@ import com.bit.dtos.doctor.CreateDoctorDto;
 import com.bit.dtos.doctor.DoctorsListDto;
 import com.bit.dtos.doctor.ShowDoctorDto;
 import com.bit.dtos.doctor.UpdateDoctorDto;
+import com.bit.dtos.patient_check.ShowPatientCheckDto;
 import com.bit.dtos.patient_reservation.ShowPatientReservationDto;
+import com.bit.entities.Doctor;
 import com.bit.services.DoctorService;
+import com.bit.services.PatientCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,9 @@ public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private PatientCheckService patientCheckService;
 
     @GetMapping("/doctors")
     public List<ShowDoctorDto> findAllDoctors() {
@@ -45,13 +50,13 @@ public class DoctorController {
     }
 
     @DeleteMapping("/doctors/{id}/deactivate")
-    public ResponseEntity deactivateReceptionist(@PathVariable("id") Long doctorId) {
+    public Doctor deactivateReceptionist(@PathVariable("id") Long doctorId) {
 
         return doctorService.deactivateDoctor(doctorId);
     }
 
     @PutMapping("/doctors/{id}/activate")
-    public ResponseEntity activateReceptionist(@PathVariable("id") Long doctorId) {
+    public Doctor activateReceptionist(@PathVariable("id") Long doctorId) {
 
         return doctorService.activateDoctor(doctorId);
     }
@@ -66,5 +71,11 @@ public class DoctorController {
     public List<ShowPatientReservationDto> findAllPatientsReservationsOfDoctor(@PathVariable Long id) {
 
         return doctorService.findAllPatientsReservationsOfDoctor(id);
+    }
+
+    @GetMapping("/doctors/{id}/patients-checks")
+    public List<ShowPatientCheckDto> findAllPatientsChecksOfDoctor(@PathVariable Long id) {
+
+        return patientCheckService.findAllAllPatientsChecksOfDoctor(id);
     }
 }

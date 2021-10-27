@@ -386,7 +386,35 @@ paths:
         200:
           description: "OK"
 
+  /api/v1/doctors/{id}/patients-checks:
+    get:
+      tags:
+        - "doctor"
+      summary: "find all patients checks by doctor id."
+      description: "find all patients checks by doctor id."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the doctor id."
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+
   /api/v1/patients-checks:
+    get:
+      tags:
+        - "laboratory"
+      summary: "find all patients checks."
+      description: "find all patients checks."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
     post:
       tags:
         - "doctor"
@@ -403,6 +431,32 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/CreatePatientCheckDto"
+      responses:
+        200:
+          description: "OK"
+
+  /api/v1/patients-checks/{id}/lab:
+    put:
+      tags:
+        - "laboratory"
+      summary: "update patient check by lab."
+      description: "update patient check by lab."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "the patient check id."
+          required: true
+          type: "string"
+        - in: "body"
+          name: "patientCheckRequest"
+          description: "patient check data"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdatePatientCheckLabDto"
       responses:
         200:
           description: "OK"
@@ -810,6 +864,13 @@ definitions:
       reservationId:
         type: "integer"
         example: "1"
+
+  UpdatePatientCheckLabDto:
+    type: "object"
+    properties:
+      dignostic:
+        type: "string"
+        example: "test the dignostic"
 
   UpdateDoctorDto:
     type: "object"

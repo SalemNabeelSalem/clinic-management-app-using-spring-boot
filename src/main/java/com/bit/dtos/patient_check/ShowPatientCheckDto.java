@@ -18,6 +18,8 @@ public class ShowPatientCheckDto {
 
     private String remarks;
 
+    private String dignostic;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 

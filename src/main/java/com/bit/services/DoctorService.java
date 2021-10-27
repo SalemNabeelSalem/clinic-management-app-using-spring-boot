@@ -12,7 +12,6 @@ import com.bit.repositories.DoctorRepository;
 import com.bit.repositories.PatientReservationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -93,7 +92,7 @@ public class DoctorService {
         );
     }
 
-    public ResponseEntity deactivateDoctor(Long doctorId) {
+    public Doctor deactivateDoctor(Long doctorId) {
 
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(
             () -> new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.")
@@ -103,10 +102,10 @@ public class DoctorService {
 
         doctorRepository.save(doctor);
 
-        return ResponseEntity.ok().build();
+        return doctorRepository.save(doctor);
     }
 
-    public ResponseEntity activateDoctor(Long doctorId) {
+    public Doctor activateDoctor(Long doctorId) {
 
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(
             () -> new ResourceNotFoundException("doctor with id: [" + doctorId + "] is not found.")
@@ -116,7 +115,7 @@ public class DoctorService {
 
         doctorRepository.save(doctor);
 
-        return ResponseEntity.ok().build();
+        return doctorRepository.save(doctor);
     }
 
     public List<DoctorsListDto> findAllDoctorsList() {
